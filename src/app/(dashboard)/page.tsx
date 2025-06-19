@@ -1,5 +1,5 @@
-import { Header } from '@/app/(dashboard)/components/Header';
 import { auth } from '@/app/api/auth/[...nextauth]/route';
+import { Header } from '@/components/Header';
 import { redirect } from 'next/navigation';
 
 export default async function Home() {

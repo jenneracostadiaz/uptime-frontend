@@ -1,4 +1,4 @@
-import {LaptopMinimal, LucideLayoutDashboard, Package2, Terminal} from 'lucide-react';
+import { LaptopMinimal, LucideLayoutDashboard, Package2, Terminal } from 'lucide-react';
 
 import {
     Sidebar,
@@ -10,9 +10,9 @@ import {
     SidebarMenuItem,
 } from '@/components/ui';
 
-import { NavSecondary } from '@/app/(dashboard)/components/NavSecondary';
-import { NavUser } from '@/app/(dashboard)/components/NavUser';
 import { auth } from '@/app/api/auth/[...nextauth]/route';
+import { NavSecondary } from '@/components/sidebar/NavSecondary';
+import { NavUser } from '@/components/sidebar/NavUser';
 import type { User } from '@/type/User';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -55,7 +55,7 @@ export async function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="/">
+                            <Link href="/public">
                                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                                     <Terminal className="size-4" />
                                 </div>
