@@ -7,10 +7,10 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuLabel, DropdownMenuSeparator,
+	DropdownMenuSeparator,
 	DropdownMenuTrigger
 } from "@/components/ui";
-import {MoreHorizontal, MoreVertical} from "lucide-react";
+import {MoreVertical} from "lucide-react";
 
 export const columns: ColumnDef<System>[]  = [
 	{
@@ -23,9 +23,7 @@ export const columns: ColumnDef<System>[]  = [
 	},
 	{
 		id: "actions",
-		cell: ({ row }) => {
-			const system = row.original
-
+		cell: () => {
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
