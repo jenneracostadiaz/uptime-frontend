@@ -1,6 +1,5 @@
 import { AppSidebar } from '@/app/(dashboard)/components/AppSidebar';
-import { ModeToggle } from '@/components/ModeToggle';
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui';
+import { SidebarInset, SidebarProvider } from '@/components/ui';
 import type { ReactNode } from 'react';
 
 interface DashboardLayoutProps {
