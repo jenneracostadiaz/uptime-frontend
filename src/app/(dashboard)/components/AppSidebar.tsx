@@ -1,16 +1,9 @@
 import {
     ChartArea,
-    Check,
-    Coins,
     LogsIcon,
     LucideLayoutDashboard,
-    PiggyBank,
-    RefreshCcw,
     RefreshCcwDot,
-    Repeat,
     Terminal,
-    Wallet,
-    WalletCards,
 } from 'lucide-react';
 
 import {
