@@ -3,7 +3,12 @@ import type { System } from '@/type/System';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { type FormEvent, useEffect, useState } from 'react';
 
-export const FormSystem = ({ system, onSuccess }: { system?: System; onSuccess?: () => void }) => {
+interface FormSystemProps {
+    system?: System;
+    onSuccess?: () => void;
+}
+
+export const FormSystem = ({ system, onSuccess }: FormSystemProps) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const queryClient = useQueryClient();
