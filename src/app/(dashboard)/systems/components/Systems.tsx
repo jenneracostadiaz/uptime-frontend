@@ -2,7 +2,7 @@
 
 import { columns } from '@/app/(dashboard)/systems/components/Columns';
 import { CreateSystem } from '@/app/(dashboard)/systems/components/CreateSystem';
-import { DataTable } from '@/app/(dashboard)/systems/components/DataTable';
+import { DataTable } from '@/components/DataTable';
 import { Alert, AlertDescription, AlertTitle, SkeletonTable } from '@/components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Terminal } from 'lucide-react';
