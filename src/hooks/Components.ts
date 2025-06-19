@@ -1,12 +1,12 @@
+import type { Component, System } from '@/type/System';
 import { useMemo } from 'react';
-import type {Component, System} from "@/type/System";
 
 interface useComponentsTableDataProps {
-	components?: Component[];
-	systems?: System[];
+    components?: Component[];
+    systems?: System[];
 }
 
-export function useComponentsTableData({components, systems}: useComponentsTableDataProps) {
+export function useComponentsTableData({ components, systems }: useComponentsTableDataProps) {
     return useMemo(() => {
         if (!components || !systems) return [];
         return components.map(component => {

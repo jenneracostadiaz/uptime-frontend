@@ -11,4 +11,4 @@ export type Component = {
     description: string;
     status: boolean;
     systemId: number;
-}
+};

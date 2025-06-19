@@ -4,9 +4,9 @@ import { columns } from '@/app/(dashboard)/systems/components/Columns';
 import { CreateSystem } from '@/app/(dashboard)/systems/components/CreateSystem';
 import { DataTable } from '@/components/DataTable';
 import { Alert, AlertDescription, AlertTitle, SkeletonTable } from '@/components/ui';
+import { useFetchSystems } from '@/hooks/Fetch';
 import { useQuery } from '@tanstack/react-query';
 import { Terminal } from 'lucide-react';
-import {useFetchSystems} from "@/hooks/Fetch";
 
 export const Systems = () => {
     const { data: systems, isLoading, isError } = useQuery({ queryKey: ['systems'], queryFn: useFetchSystems });
