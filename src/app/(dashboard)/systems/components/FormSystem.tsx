@@ -23,7 +23,7 @@ export const FormSystem = ({ system, onSuccess }: { system?: System; onSuccess?:
             const res = await fetch('/api/systems', {
                 method,
                 headers: { 'Content-Type': 'application/json' },
-                body
+                body,
             });
             if (!res.ok) {
                 const data = await res.json();
@@ -32,11 +32,11 @@ export const FormSystem = ({ system, onSuccess }: { system?: System; onSuccess?:
             return res.json();
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['systems']}).then(r => console.log(r));
+            queryClient.invalidateQueries({ queryKey: ['systems'] }).then(r => console.log(r));
             setName('');
             setDescription('');
             if (onSuccess) onSuccess();
-        }
+        },
     });
 
     const handleSubmit = async (e: FormEvent) => {
@@ -75,7 +75,13 @@ export const FormSystem = ({ system, onSuccess }: { system?: System; onSuccess?:
 
                 <div className="grid gap-3">
                     <Button type="submit" className="w-full" disabled={isPending} aria-haspopup="dialog">
-                        {isPending ? (system ? 'Updating...' : 'Creating...') : (system ? 'Update System' : 'Create System')}
+                        {isPending
+                            ? system
+                                ? 'Updating...'
+                                : 'Creating...'
+                            : system
+                              ? 'Update System'
+                              : 'Create System'}
                     </Button>
                 </div>
             </div>

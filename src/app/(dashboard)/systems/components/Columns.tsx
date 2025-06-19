@@ -1,17 +1,11 @@
 'use client';
 
-import {
-    Button,
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from '@/components/ui';
+import { DeleteSystem } from '@/app/(dashboard)/systems/components/DeleteSystem';
+import { EditSystem } from '@/app/(dashboard)/systems/components/EditSystem';
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui';
 import type { System } from '@/type/System';
 import type { ColumnDef } from '@tanstack/table-core';
 import { MoreVertical } from 'lucide-react';
-import { EditSystem } from '@/app/(dashboard)/systems/components/EditSystem';
-import { DeleteSystem } from '@/app/(dashboard)/systems/components/DeleteSystem';
 
 export const columns: ColumnDef<System>[] = [
     {

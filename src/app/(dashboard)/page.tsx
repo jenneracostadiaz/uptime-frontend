@@ -1,6 +1,6 @@
+import { Header } from '@/app/(dashboard)/components/Header';
 import { auth } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
-import {Header} from "@/app/(dashboard)/components/Header";
 
 export default async function Home() {
     const session = await auth();

@@ -1,16 +1,11 @@
 'use client';
 
 import { columns } from '@/app/(dashboard)/systems/components/Columns';
+import { CreateSystem } from '@/app/(dashboard)/systems/components/CreateSystem';
 import { DataTable } from '@/app/(dashboard)/systems/components/DataTable';
-import {
-    Alert,
-    AlertDescription,
-    AlertTitle,
-    SkeletonTable,
-} from '@/components/ui';
+import { Alert, AlertDescription, AlertTitle, SkeletonTable } from '@/components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Terminal } from 'lucide-react';
-import {CreateSystem} from "@/app/(dashboard)/systems/components/CreateSystem";
 
 const fetchSystems = async () => {
     const response = await fetch('/api/systems');
@@ -27,7 +22,7 @@ export const Systems = () => {
         <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between w-full">
                 <h1 className="text-2xl font-bold">Systems</h1>
-            <CreateSystem />
+                <CreateSystem />
             </div>
             {isError && (
                 <Alert variant="destructive">

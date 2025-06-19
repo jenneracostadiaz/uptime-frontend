@@ -1,15 +1,9 @@
 'use client';
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger
-} from '@/components/ui';
 import { FormSystem } from '@/app/(dashboard)/systems/components/FormSystem';
-import { useState } from 'react';
-import type { System } from '@/type/System';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
+import type { System } from '@/type/System';
+import { useState } from 'react';
 
 export const EditSystem = ({ system }: { system: System }) => {
     const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -27,4 +21,3 @@ export const EditSystem = ({ system }: { system: System }) => {
         </Dialog>
     );
 };
-

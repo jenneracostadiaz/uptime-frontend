@@ -9,10 +9,10 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
-    DropdownMenuItem
+    DropdownMenuItem,
 } from '@/components/ui';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { System } from '@/type/System';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
 export const DeleteSystem = ({ system }: { system: System }) => {
@@ -24,7 +24,7 @@ export const DeleteSystem = ({ system }: { system: System }) => {
             const res = await fetch('/api/systems', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: system.id })
+                body: JSON.stringify({ id: system.id }),
             });
             if (!res.ok) {
                 const data = await res.json();
@@ -35,13 +35,13 @@ export const DeleteSystem = ({ system }: { system: System }) => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['systems'] });
             setOpen(false);
-        }
+        },
     });
 
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
             <AlertDialogTrigger asChild>
-                <DropdownMenuItem variant="destructive" onSelect={(e) => e.preventDefault()}>
+                <DropdownMenuItem variant="destructive" onSelect={e => e.preventDefault()}>
                     Delete
                 </DropdownMenuItem>
             </AlertDialogTrigger>
@@ -49,8 +49,8 @@ export const DeleteSystem = ({ system }: { system: System }) => {
                 <AlertDialogHeader>
                     <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        This action cannot be undone. This will permanently delete the system
-                        and remove its data from our servers.
+                        This action cannot be undone. This will permanently delete the system and remove its data from
+                        our servers.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -63,4 +63,3 @@ export const DeleteSystem = ({ system }: { system: System }) => {
         </AlertDialog>
     );
 };
-
