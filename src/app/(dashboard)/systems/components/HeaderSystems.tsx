@@ -19,7 +19,7 @@ export default function HeaderSystems() {
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem className="hidden md:block">
-                            <BreadcrumbLink href="#">Uptime</BreadcrumbLink>
+                            <BreadcrumbLink href="/">Uptime</BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator className="hidden md:block" />
                         <BreadcrumbItem>
