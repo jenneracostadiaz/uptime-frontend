@@ -17,6 +17,7 @@ import {
 } from '@/components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Terminal } from 'lucide-react';
+import {FormSystem} from "@/app/(dashboard)/systems/components/FormSystem";
 
 const fetchSystems = async () => {
     const response = await fetch('/api/systems');
@@ -41,7 +42,7 @@ export const Systems = () => {
                         <DialogHeader>
                             <DialogTitle>Add New System</DialogTitle>
                             <DialogDescription>
-                                Form to create a new system will go here. You can add fields like name, description, and other relevant details.
+                                <FormSystem />
                             </DialogDescription>
                         </DialogHeader>
                     </DialogContent>
