@@ -1,11 +1,11 @@
 import HeaderSystems from "@/app/(dashboard)/systems/components/HeaderSystems";
+import {SystemProvider} from "@/app/(dashboard)/systems/components/SystemProvider";
 
-export default function SystemsPage(){
-
+export default async function SystemsPage(){
 	return (
 		<>
 			<HeaderSystems />
-			<h1>Systems</h1>
+			<SystemProvider />
 		</>
 	);
 }
