@@ -12,3 +12,18 @@ export type Component = {
     status: boolean;
     systemId: number;
 };
+
+export type UptimeCheck = {
+    id:number;
+    name: string
+    serviceSystemId: number
+    componentId: number
+    checkUrl: string
+    checkInterval: number
+    checkTimeout: number
+    requestHeaders: string
+    downAlertDelay: number
+    downAlertResend: number
+    downAlertMessage: string
+    alertEmail: string
+}
