@@ -7,17 +7,10 @@ import {
     AlertDescription,
     AlertTitle,
     SkeletonTable,
-    Dialog,
-    DialogTrigger,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogDescription,
-    Button
 } from '@/components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Terminal } from 'lucide-react';
-import {FormSystem} from "@/app/(dashboard)/systems/components/FormSystem";
+import {CreateSystem} from "@/app/(dashboard)/systems/components/CreateSystem";
 
 const fetchSystems = async () => {
     const response = await fetch('/api/systems');
@@ -34,19 +27,7 @@ export const Systems = () => {
         <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between w-full">
                 <h1 className="text-2xl font-bold">Systems</h1>
-                <Dialog>
-                    <DialogTrigger>
-                        <Button variant="outline">Create System</Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                        <DialogHeader>
-                            <DialogTitle>Add New System</DialogTitle>
-                            <DialogDescription>
-                                <FormSystem />
-                            </DialogDescription>
-                        </DialogHeader>
-                    </DialogContent>
-                </Dialog>
+            <CreateSystem />
             </div>
             {isError && (
                 <Alert variant="destructive">
