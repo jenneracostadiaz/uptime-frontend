@@ -47,6 +47,11 @@ export async function AppSidebar() {
             url: '/components',
             icon: Package2,
         },
+        {
+            title: 'Check Monitor',
+            url: '/check-monitor',
+            icon: Terminal,
+        },
     ];
 
     return (
