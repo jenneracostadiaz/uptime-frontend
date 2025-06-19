@@ -1,7 +1,7 @@
 import type {Component} from "@/type/System";
 import { useEffect, useState} from "react";
 import type { FormEvent } from "react";
-import {useMutation, useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {
 	Alert, AlertDescription, AlertTitle,
 	Button,
@@ -25,6 +25,7 @@ export const FormComponent = ({component, onSuccess}: FormComponentProps) => {
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
 	const [systemId, setSystemId] = useState<number | null>(null);
+	const queryClient = useQueryClient();
 
 	const { data: systems, isLoading: isLoadingSystems, isError: isErrorSystems } = useQuery({ queryKey: ['systems'], queryFn: useFetchSystems });
 
@@ -53,6 +54,7 @@ export const FormComponent = ({component, onSuccess}: FormComponentProps) => {
 			return res.json();
 		},
 		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['components'] }).then(r => console.log(r));
 			setName('');
 			setDescription('');
 			setSystemId(null);
@@ -99,7 +101,7 @@ export const FormComponent = ({component, onSuccess}: FormComponentProps) => {
 				<div className="grid gap-3">
 					<Label htmlFor="systemId">System</Label>
 					<Select
-						value={systemId?.toString() ?? ''}
+						value={systemId?.toString()}
 						onValueChange={(value) => setSystemId(value ? Number.parseInt(value) : null)}
 						disabled={isLoadingSystems || isErrorSystems}
 						required
