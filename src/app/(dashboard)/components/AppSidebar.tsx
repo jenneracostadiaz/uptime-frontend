@@ -1,4 +1,4 @@
-import { LaptopMinimal, LucideLayoutDashboard, Terminal } from 'lucide-react';
+import {LaptopMinimal, LucideLayoutDashboard, Package2, Terminal} from 'lucide-react';
 
 import {
     Sidebar,
@@ -41,6 +41,11 @@ export async function AppSidebar() {
             title: 'Systems',
             url: '/systems',
             icon: LaptopMinimal,
+        },
+        {
+            title: 'Components',
+            url: '/components',
+            icon: Package2,
         },
     ];
 
