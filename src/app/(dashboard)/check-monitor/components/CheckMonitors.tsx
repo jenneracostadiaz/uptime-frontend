@@ -1,25 +1,41 @@
 'use client';
 
-import {useFetchChecks} from "@/hooks/Fetch";
+import {useFetchChecks, useFetchComponents, useFetchSystems} from "@/hooks/Fetch";
 import {useQuery} from "@tanstack/react-query";
-import isError from "next/dist/lib/is-error";
 import {Alert, AlertDescription, AlertTitle, SkeletonTable} from "@/components/ui";
 import {Terminal} from "lucide-react";
 import {DataTable} from "@/components/DataTable";
 import {Columns} from "@/app/(dashboard)/check-monitor/components/Columns";
+import {useChecksTableData} from "@/hooks/Components";
 
 export const CheckMonitors = () => {
 
-	const {data: checks, isLoading, isError} = useQuery({
+	const {data: checks, isLoading: isLoadingChecks, isError: isErrorChecks} = useQuery({
 		queryKey: ['checks'],
 		queryFn: useFetchChecks,
 	});
+
+	const {data: components, isLoading: isLoadingComponents, isError: isErrorComponents} = useQuery({
+		queryKey: ['components'],
+		queryFn: useFetchComponents
+	});
+
+	const {data: systems, isLoading: isLoadingSystems, isError: isErrorSystems} = useQuery({
+		queryKey: ['systems'],
+		queryFn: useFetchSystems
+	});
+
+	const isLoading = isLoadingChecks || isLoadingComponents || isLoadingSystems;
+	const isError = isErrorChecks || isErrorComponents || isErrorSystems;
+
+	const tableData = useChecksTableData({checks, components, systems});
 
 	return (
 		<div className="flex flex-col gap-4">
 			<div className="flex items-center justify-between w-full">
 				<h1 className="text-2xl font-bold">Check Monitors</h1>
 			</div>
+
 			{isError && (
 				<Alert variant="destructive">
 					<Terminal/>
@@ -28,9 +44,8 @@ export const CheckMonitors = () => {
 				</Alert>
 			)}
 
-
 			{!isError &&
-				(isLoading ? <SkeletonTable /> : checks && <DataTable data={checks} columns={Columns} />)}
+				(isLoading ? <SkeletonTable /> : checks && <DataTable data={tableData} columns={Columns} />)}
 		</div>
 	);
 }
