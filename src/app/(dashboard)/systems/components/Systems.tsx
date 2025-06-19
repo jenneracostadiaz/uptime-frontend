@@ -17,7 +17,6 @@ const fetchSystems = async () => {
 export const Systems = () => {
 
 	const { data: systems, isLoading, isError, } = useQuery({ queryKey: ['systems'], queryFn: fetchSystems });
-	console.log('systems', systems);
 
 	return (
 		<div className="flex flex-col gap-4">
