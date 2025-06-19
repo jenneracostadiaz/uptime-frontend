@@ -6,17 +6,10 @@ import { DataTable } from '@/components/DataTable';
 import { Alert, AlertDescription, AlertTitle, SkeletonTable } from '@/components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Terminal } from 'lucide-react';
-
-const fetchSystems = async () => {
-    const response = await fetch('/api/systems');
-    if (!response.ok) {
-        throw new Error('Failed to fetch systems');
-    }
-    return response.json();
-};
+import {useFetchSystems} from "@/hooks/Fetch";
 
 export const Systems = () => {
-    const { data: systems, isLoading, isError } = useQuery({ queryKey: ['systems'], queryFn: fetchSystems });
+    const { data: systems, isLoading, isError } = useQuery({ queryKey: ['systems'], queryFn: useFetchSystems });
 
     return (
         <div className="flex flex-col gap-4">
