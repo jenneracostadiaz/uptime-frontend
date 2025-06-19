@@ -1,5 +1,5 @@
 import {
-    ChartArea,
+    ChartArea, LaptopMinimal,
     LogsIcon,
     LucideLayoutDashboard,
     RefreshCcwDot,
@@ -44,19 +44,9 @@ export async function AppSidebar() {
             icon: LucideLayoutDashboard,
         },
         {
-            title: 'Checks',
-            url: '#',
-            icon: RefreshCcwDot,
-        },
-        {
-            title: 'Logs',
-            url: '#',
-            icon: LogsIcon,
-        },
-        {
-            title: 'Reports',
-            url: '#',
-            icon: ChartArea,
+            title: 'Systems',
+            url: '/systems',
+            icon: LaptopMinimal,
         },
     ];
 
