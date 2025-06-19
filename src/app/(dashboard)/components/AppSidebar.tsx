@@ -1,8 +1,4 @@
-import {
-    LaptopMinimal,
-    LucideLayoutDashboard,
-    Terminal,
-} from 'lucide-react';
+import { LaptopMinimal, LucideLayoutDashboard, Terminal } from 'lucide-react';
 
 import {
     Sidebar,
