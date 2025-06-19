@@ -11,6 +11,8 @@ import {
 import type { System } from '@/type/System';
 import type { ColumnDef } from '@tanstack/table-core';
 import { MoreVertical } from 'lucide-react';
+import { EditSystem } from '@/app/(dashboard)/systems/components/EditSystem';
+import { DeleteSystem } from '@/app/(dashboard)/systems/components/DeleteSystem';
 
 export const columns: ColumnDef<System>[] = [
     {
@@ -23,7 +25,8 @@ export const columns: ColumnDef<System>[] = [
     },
     {
         id: 'actions',
-        cell: () => {
+        cell: ({ row }) => {
+            const system = row.original;
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -38,9 +41,9 @@ export const columns: ColumnDef<System>[] = [
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-32">
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <EditSystem system={system} />
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
+                        <DeleteSystem system={system} />
                     </DropdownMenuContent>
                 </DropdownMenu>
             );
