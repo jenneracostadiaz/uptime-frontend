@@ -2,7 +2,19 @@
 
 import { columns } from '@/app/(dashboard)/systems/components/Columns';
 import { DataTable } from '@/app/(dashboard)/systems/components/DataTable';
-import { Alert, AlertDescription, AlertTitle, SkeletonTable } from '@/components/ui';
+import {
+    Alert,
+    AlertDescription,
+    AlertTitle,
+    SkeletonTable,
+    Dialog,
+    DialogTrigger,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+    Button
+} from '@/components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Terminal } from 'lucide-react';
 
@@ -19,7 +31,22 @@ export const Systems = () => {
 
     return (
         <div className="flex flex-col gap-4">
-            <h1 className="text-2xl font-bold">Systems</h1>
+            <div className="flex items-center justify-between w-full">
+                <h1 className="text-2xl font-bold">Systems</h1>
+                <Dialog>
+                    <DialogTrigger>
+                        <Button variant="outline">Create System</Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Add New System</DialogTitle>
+                            <DialogDescription>
+                                Form to create a new system will go here. You can add fields like name, description, and other relevant details.
+                            </DialogDescription>
+                        </DialogHeader>
+                    </DialogContent>
+                </Dialog>
+            </div>
             {isError && (
                 <Alert variant="destructive">
                     <Terminal />
