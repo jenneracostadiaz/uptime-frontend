@@ -2,8 +2,8 @@ import type {ColumnDef} from "@tanstack/table-core";
 import type {Component} from "@/type/System";
 import {Button, DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger} from "@/components/ui";
 import {MoreVertical} from "lucide-react";
-import {EditComponent} from "@/app/(dashboard)/components/components/EditComponent";
-import {DeleteComponent} from "@/app/(dashboard)/components/components/DeleteComponent";
+import {EditCheck} from "@/app/(dashboard)/check-monitor/components/EditCheck";
+import {DelectCheck} from "@/app/(dashboard)/check-monitor/components/DelectCheck";
 
 export const Columns: ColumnDef<Component & { systemName: string }>[] = [
 	{
@@ -25,7 +25,7 @@ export const Columns: ColumnDef<Component & { systemName: string }>[] = [
 	{
 		id: 'actions',
 		cell: ({ row }) => {
-			const component = row.original;
+			const check = row.original;
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
@@ -40,9 +40,9 @@ export const Columns: ColumnDef<Component & { systemName: string }>[] = [
 						</div>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end" className="w-32">
-						{/*<EditComponent component={component} /> // */}
+						<EditCheck check={check} />
 						<DropdownMenuSeparator />
-						{/*<DeleteComponent component={component} />*/}
+						<DelectCheck check={check} />
 					</DropdownMenuContent>
 				</DropdownMenu>
 			);
