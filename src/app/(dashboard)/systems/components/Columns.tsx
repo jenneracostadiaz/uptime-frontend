@@ -30,12 +30,10 @@ export const columns: ColumnDef<System>[] = [
             const system = row.original;
             return system.status ? (
                 <Badge variant="outline">
-                    {' '}
                     <CircleCheckBig className="text-green-500 dark:text-green-400" /> Active
                 </Badge>
             ) : (
                 <Badge variant="destructive">
-                    {' '}
                     <CircleOff /> Inactive
                 </Badge>
             );
