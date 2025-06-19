@@ -1,8 +1,6 @@
 import {
-    ChartArea, LaptopMinimal,
-    LogsIcon,
+    LaptopMinimal,
     LucideLayoutDashboard,
-    RefreshCcwDot,
     Terminal,
 } from 'lucide-react';
 
