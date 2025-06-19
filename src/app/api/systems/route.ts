@@ -5,41 +5,49 @@ let data: System[] = [
         id: 1,
         name: 'System Status',
         description: 'Check the current status of the system.',
+        status: true,
     },
     {
         id: 2,
         name: 'System Logs',
         description: 'View the logs for system activities.',
+        status: true,
     },
     {
         id: 3,
         name: 'System Settings',
         description: 'Configure system settings and preferences.',
+        status: true,
     },
     {
         id: 4,
         name: 'User Management',
         description: 'Manage user accounts and permissions.',
+        status: true,
     },
     {
         id: 5,
         name: 'Backup and Restore',
         description: 'Create backups and restore system data.',
+        status: false,
     },
     {
         id: 6,
         name: 'System Updates',
         description: 'Check for and apply system updates.',
+        status: true,
     },
     {
         id: 7,
         name: 'Performance Monitoring',
         description: 'Monitor system performance metrics.',
+        status: false,
     },
     {
         id: 8,
         name: 'Security Settings',
         description: 'Configure security settings for the system.',
+        status: true,
     },
 ];
 
@@ -67,6 +75,7 @@ export async function POST(request: Request) {
             id: newId,
             name: body.name,
             description: body.description,
+            status: true,
         };
         data.push(newSystem);
         return new Response(JSON.stringify(newSystem), {
