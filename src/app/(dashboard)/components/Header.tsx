@@ -1,9 +1,7 @@
 import {
 	Breadcrumb,
 	BreadcrumbItem,
-	BreadcrumbLink,
 	BreadcrumbList, BreadcrumbPage,
-	BreadcrumbSeparator,
 	Separator,
 	SidebarTrigger
 } from "@/components/ui";
