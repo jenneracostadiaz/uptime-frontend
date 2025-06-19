@@ -2,10 +2,17 @@
 
 import { DeleteSystem } from '@/app/(dashboard)/systems/components/DeleteSystem';
 import { EditSystem } from '@/app/(dashboard)/systems/components/EditSystem';
-import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui';
+import {
+    Badge,
+    Button,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from '@/components/ui';
 import type { System } from '@/type/System';
 import type { ColumnDef } from '@tanstack/table-core';
-import { MoreVertical } from 'lucide-react';
+import {CircleCheckBig, CircleOff, MoreVertical} from 'lucide-react';
 
 export const columns: ColumnDef<System>[] = [
     {
@@ -15,6 +22,16 @@ export const columns: ColumnDef<System>[] = [
     {
         accessorKey: 'description',
         header: 'Description',
+    },
+    {
+        accessorKey: 'status',
+        header: 'Status',
+        cell: ({ row }) => {
+            const system = row.original;
+            return system.status
+                ? <Badge variant="outline"> <CircleCheckBig className="text-green-500 dark:text-green-400" /> Active</Badge>
+                : <Badge variant="destructive"> <CircleOff /> Inactive</Badge>;
+        },
     },
     {
         id: 'actions',
