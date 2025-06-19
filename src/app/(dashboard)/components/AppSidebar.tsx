@@ -1,14 +1,16 @@
 import {
     ChartArea,
     Check,
-    Coins, LogsIcon,
+    Coins,
+    LogsIcon,
     LucideLayoutDashboard,
     PiggyBank,
     RefreshCcw,
-    RefreshCcwDot, Repeat,
+    RefreshCcwDot,
+    Repeat,
     Terminal,
     Wallet,
-    WalletCards
+    WalletCards,
 } from 'lucide-react';
 
 import {
@@ -56,12 +58,12 @@ export async function AppSidebar() {
         {
             title: 'Logs',
             url: '#',
-            icon: LogsIcon
+            icon: LogsIcon,
         },
         {
             title: 'Reports',
             url: '#',
-            icon: ChartArea
+            icon: ChartArea,
         },
     ];
 
