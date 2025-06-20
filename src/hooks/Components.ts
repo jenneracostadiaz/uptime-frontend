@@ -1,4 +1,4 @@
-import type {Component, System, UptimeCheck} from '@/type/System';
+import type {Component, System, Check} from '@/type/System';
 import { useMemo } from 'react';
 
 interface useComponentsTableDataProps {
@@ -20,22 +20,22 @@ export function useComponentsTableData({ components, systems }: useComponentsTab
 }
 
 interface useChecksTableDataProps {
-    checks?: UptimeCheck[];
+    checks?: Check[];
     components?: Component[];
     systems?: System[];
 }
 
-export function useChecksTableData({ checks, components, systems }: useChecksTableDataProps) {
+export function useChecksTableData({ checks }: useChecksTableDataProps) {
     return useMemo(() => {
-        if (!checks || !components || !systems) return [];
-        return checks.map((check: UptimeCheck) => {
-            const component = components.find(c => c.id === check.componentId);
-            const system = systems.find(s => s.id === (component ? component.systemId : null));
+        if (!checks) return [];
+        return checks.map((check: Check) => {
+            // const component = components.find(c => c.id === check.componentId);
+            // const system = systems.find(s => s.id === check.serviceSystemId);
             return {
                 ...check,
-                systemName: system ? system.name : 'Unlinked',
-                componentName: component ? component.name : 'Unlinked',
+                // systemName: system?.name ?? '',
+                // componentName: component?.name ?? '',
             };
         });
-    }, [checks, components, systems]);
+    }, [checks]);
 }

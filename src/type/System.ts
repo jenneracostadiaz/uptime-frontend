@@ -13,7 +13,7 @@ export type Component = {
     systemId: number;
 };
 
-export type UptimeCheck = {
+export type Check = {
     id:number;
     name: string
     serviceSystemId: number

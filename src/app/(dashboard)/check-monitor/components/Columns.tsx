@@ -1,22 +1,14 @@
 import type {ColumnDef} from "@tanstack/table-core";
-import type {Component} from "@/type/System";
+import type {Check} from "@/type/System";
 import {Button, DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger} from "@/components/ui";
 import {MoreVertical} from "lucide-react";
 import {EditCheck} from "@/app/(dashboard)/check-monitor/components/EditCheck";
 import {DelectCheck} from "@/app/(dashboard)/check-monitor/components/DelectCheck";
 
-export const Columns: ColumnDef<Component & { systemName: string }>[] = [
+export const Columns: ColumnDef<Check>[] = [
 	{
 		accessorKey: 'name',
 		header: 'Name',
-	},
-	{
-		accessorKey: 'systemName',
-		header: 'System',
-	},
-	{
-		accessorKey: 'componentName',
-		header: 'Component',
 	},
 	{
 		accessorKey: 'checkUrl',

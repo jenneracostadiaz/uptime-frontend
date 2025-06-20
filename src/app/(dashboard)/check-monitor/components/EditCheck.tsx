@@ -1,10 +1,13 @@
 'use client';
-import type {UptimeCheck} from "@/type/System";
+import type {Check} from "@/type/System";
 import {useState} from "react";
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DropdownMenuItem} from "@/components/ui";
-import {FormComponent} from "@/app/(dashboard)/components/components/FormComponent";
 
-export const EditCheck = ({check}: {check: UptimeCheck}) => {
+interface EditCheckProps {
+	check: Check;
+}
+
+export const EditCheck = ({check}: EditCheckProps) => {
 	const [isEditModalOpen, setEditModalOpen] = useState(false);
 	return (
 		<Dialog open={isEditModalOpen} onOpenChange={setEditModalOpen}>
@@ -14,7 +17,7 @@ export const EditCheck = ({check}: {check: UptimeCheck}) => {
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Edit System</DialogTitle>
-					Hello World
+					{check.name}
 				</DialogHeader>
 			</DialogContent>
 		</Dialog>

@@ -1,4 +1,4 @@
-import type {Component, System, UptimeCheck} from '@/type/System';
+import type {Component, System, Check} from '@/type/System';
 
 export const useFetchComponents = async (): Promise<Component[]> => {
     const response = await fetch('/api/components');
@@ -16,7 +16,7 @@ export const useFetchSystems = async (): Promise<System[]> => {
     return response.json();
 };
 
-export const useFetchChecks = async (): Promise<UptimeCheck[]> => {
+export const useFetchChecks = async (): Promise<Check[]> => {
     const response = await fetch('/api/checks');
     if (!response.ok) {
         throw new Error('Failed to fetch checks');

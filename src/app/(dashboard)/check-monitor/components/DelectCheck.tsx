@@ -1,6 +1,6 @@
 'use client';
 
-import type {UptimeCheck} from "@/type/System";
+import type {Check} from "@/type/System";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -14,7 +14,7 @@ import {
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {useState} from "react";
 
-export const DelectCheck = ({check} : {check: UptimeCheck}) => {
+export const DelectCheck = ({check} : {check: Check}) => {
 	const queryClient = useQueryClient();
 	const [open, setOpen] = useState(false);
 

@@ -1,6 +1,6 @@
-import type {UptimeCheck} from "@/type/System";
+import type {Check} from "@/type/System";
 
-let data: UptimeCheck[] = [
+let data: Check[] = [
 	{
 		id: 1,
 		name: 'User Authentication Check',
@@ -82,7 +82,7 @@ export async function POST(request: Request) {
 		}
 
 		const newId = data.length > 0 ? data[data.length - 1].id + 1 : 1;
-		const newCheck: UptimeCheck = {
+		const newCheck: Check = {
 			id: newId,
 			name: body.name,
 			serviceSystemId: body.serviceSystemId,
