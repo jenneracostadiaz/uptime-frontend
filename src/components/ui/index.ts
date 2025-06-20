@@ -17,4 +17,5 @@ export * from './sidebar';
 export * from './skeleton';
 export * from './skeleton-table';
 export * from './table';
+export * from './textarea';
 export * from './tooltip';
