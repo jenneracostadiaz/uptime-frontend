@@ -2,6 +2,7 @@
 
 import {useState} from "react";
 import {Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui";
+import {FormCheck} from "@/app/(dashboard)/check-monitor/components/FormCheck";
 
 export const CreateCheck = () => {
 	const [isCreateModalOpen, setCreateModalOpen] = useState(false);
@@ -13,7 +14,7 @@ export const CreateCheck = () => {
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Add New Component</DialogTitle>
-					New check form goes here
+					<FormCheck onSuccess={() => setCreateModalOpen(true)} />
 				</DialogHeader>
 			</DialogContent>
 		</Dialog>
