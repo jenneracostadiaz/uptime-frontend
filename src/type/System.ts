@@ -27,3 +27,16 @@ export type Check = {
     downAlertMessage: string;
     alertEmail: string;
 };
+
+export type UptimeEvent = {
+    id: number;
+    uptimeCheckId: number;
+    startTime: string;
+    endTime: string;
+    isUp: boolean;
+    isFalsePositive: boolean;
+    category: any;
+    note: string;
+    jiraTicket: any;
+    maintenanceType: any;
+}
