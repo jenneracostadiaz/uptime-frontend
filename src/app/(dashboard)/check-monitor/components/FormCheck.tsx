@@ -1,5 +1,5 @@
-import type{Check} from "@/type/System";
-import {useEffect, useState} from "react";
+import type {Check} from "@/type/System";
+import {useEffect, useReducer, useState} from "react";
 import type {FormEvent} from "react";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useFetchComponents, useFetchSystems} from "@/hooks/Fetch";
@@ -21,18 +21,44 @@ interface FormCheckProps {
 	onSuccess?: () => void;
 }
 
+type FormState = Omit<Check, 'id' | 'serviceSystemId' | 'componentId'> & {
+  serviceSystemId: number | null;
+  componentId: number | null;
+};
+
+const initialState: FormState = {
+  name: '',
+  serviceSystemId: null,
+  componentId: null,
+  checkUrl: '',
+  checkInterval: 60,
+  checkTimeout: 10,
+  requestHeaders: '',
+  downAlertDelay: 60,
+  downAlertResend: 60,
+  downAlertMessage: '',
+  alertEmail: '',
+};
+
+type FormAction =
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  | { type: 'SET_FIELD'; field: keyof FormState; value: any}
+  | { type: 'RESET_FORM'; payload?: FormState };
+
+const formReducer = (state: FormState, action: FormAction): FormState => {
+  switch (action.type) {
+    case 'SET_FIELD':
+      return { ...state, [action.field]: action.value };
+    case 'RESET_FORM':
+      return action.payload || initialState;
+    default:
+      return state;
+  }
+};
+
 export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
-	const [name, setName] = useState('');
-	const [serviceSystemId, setServiceSystemId] = useState<number | null>(null);
-	const [componentId, setComponentId] = useState<number | null>(null);
-	const [checkUrl, setCheckUrl] = useState('');
-	const [checkInterval, setCheckInterval] = useState(60);
-	const [checkTimeout, setCheckTimeout] = useState(10);
-	const [requestHeaders, setRequestHeaders] = useState('');
-	const [downAlertDelay, setDownAlertDelay] = useState(60);
-	const [downAlertResend, setDownAlertResend] = useState(60);
-	const [downAlertMessage, setDownAlertMessage] = useState('');
-	const [alertEmail, setAlertEmail] = useState('');
+	const [formState, dispatch] = useReducer(formReducer, initialState);
+	const [validationError, setValidationError] = useState<string | null>(null);
 	const queryClient = useQueryClient();
 
 	const {
@@ -49,34 +75,27 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 
 	useEffect(() => {
 		if(check){
-			setName(check.name);
-			setServiceSystemId(check.serviceSystemId);
-			setComponentId(check.componentId);
-			setCheckUrl(check.checkUrl);
-			setCheckInterval(check.checkInterval);
-			setCheckTimeout(check.checkTimeout);
-			setRequestHeaders(check.requestHeaders);
-			setDownAlertDelay(check.downAlertDelay);
-			setDownAlertResend(check.downAlertResend);
-			setDownAlertMessage(check.downAlertMessage);
-			setAlertEmail(check.alertEmail);
+			dispatch({
+				type: 'RESET_FORM',
+				payload: {
+					name: check.name,
+					serviceSystemId: check.serviceSystemId,
+					componentId: check.componentId,
+					checkUrl: check.checkUrl,
+					checkInterval: check.checkInterval,
+					checkTimeout: check.checkTimeout,
+					requestHeaders: check.requestHeaders,
+					downAlertDelay: check.downAlertDelay,
+					downAlertResend: check.downAlertResend,
+					downAlertMessage: check.downAlertMessage,
+					alertEmail: check.alertEmail,
+				}
+			});
 		}
 	}, [check]);
 
 	const { mutate, isPending, error } = useMutation({
-		mutationFn: async (newCheck: {
-			name: string;
-			serviceSystemId: number;
-			componentId: number;
-			checkUrl: string;
-			checkInterval: number;
-			checkTimeout: number;
-			requestHeaders: string;
-			downAlertDelay: number;
-			downAlertResend: number;
-			downAlertMessage: string;
-			alertEmail: string;
-		}) => {
+		mutationFn: async (newCheck: Omit<Check, 'id'>) => {
 			const method = check ? 'PUT' : 'POST';
 			const body = check
 				? JSON.stringify({ id: check.id, ...newCheck })
@@ -94,46 +113,39 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 			return res.json();
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['checks'] }).then(r => console.log(r));
-			setName('');
-			setServiceSystemId(null);
-			setComponentId(null);
-			setCheckUrl('');
-			setCheckInterval(60);
-			setCheckTimeout(10);
-			setRequestHeaders('');
-			setDownAlertDelay(60);
-			setDownAlertResend(60);
-			setDownAlertMessage('');
-			setAlertEmail('');
+			queryClient.invalidateQueries({ queryKey: ['checks'] });
+			dispatch({ type: 'RESET_FORM' });
 			if (onSuccess) onSuccess();
 		},
 	});
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-		if (serviceSystemId === null || componentId === null) {
-			alert('Please select a system and component');
+		if (formState.serviceSystemId === null || formState.componentId === null) {
+			setValidationError('Please select a system and component');
 			return;
 		}
-		mutate({
-			name,
-			serviceSystemId,
-			componentId,
-			checkUrl,
-			checkInterval,
-			checkTimeout,
-			requestHeaders,
-			downAlertDelay,
-			downAlertResend,
-			downAlertMessage,
-			alertEmail
-		});
+		setValidationError(null);
+		mutate(formState as Omit<Check, 'id'>);
 	}
 
 	return (
 		<form onSubmit={handleSubmit}>
 			<div className="flex flex-col gap-6">
+				{validationError && (
+					<Alert variant="destructive">
+						<Terminal className="h-4 w-4" />
+						<AlertTitle>Error</AlertTitle>
+						<AlertDescription>{validationError}</AlertDescription>
+					</Alert>
+				)}
+				{error && (
+					<Alert variant="destructive">
+						<Terminal className="h-4 w-4" />
+						<AlertTitle>Error</AlertTitle>
+						<AlertDescription>{error.message}</AlertDescription>
+					</Alert>
+				)}
 				<div className="grid gap-3">
 					<Label htmlFor="name">Check Name</Label>
 					<Input
@@ -141,52 +153,48 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 						type="text"
 						placeholder="Enter check name"
 						required
-						value={name}
-						onChange={e => setName(e.target.value)}
+						value={formState.name}
+						onChange={e => dispatch({ type: 'SET_FIELD', field: 'name', value: e.target.value })}
 						/>
 				</div>
 
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 					<div className="grid gap-3">
 						<Label htmlFor="serviceSystemId">Service System</Label>
-						<Select
-							defaultValue={serviceSystemId?.toString()}
-							onValueChange={value => setServiceSystemId(value ? Number.parseInt(value) : null)}
+						<select
+							id="serviceSystemId"
+							value={formState.serviceSystemId?.toString() || ''}
+							onChange={e => dispatch({ type: 'SET_FIELD', field: 'serviceSystemId', value: e.target.value ? Number.parseInt(e.target.value) : null })}
 							disabled={isLoadingSystems || isErrorSystems}
 							required
+							className="w-full p-2 text-sm border rounded-md dark:bg-gray-900 dark:text-gray-300"
 							>
-							<SelectTrigger className="w-full">
-								<SelectValue placeholder="Select system" />
-							</SelectTrigger>
-							<SelectContent>
-								{!isLoadingSystems && !isErrorSystems && systems?.map(system => (
-									<SelectItem key={system.id} value={system.id.toString()}>
-										{system.name}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
+							<option value="" disabled>Select system</option>
+							{!isLoadingSystems && !isErrorSystems && systems?.map(system => (
+								<option key={system.id} value={system.id.toString()}>
+									{system.name}
+								</option>
+							))}
+						</select>
 					</div>
 
 					<div className="grid gap-3">
 						<Label htmlFor="componentId">Component</Label>
-						<Select
-							value={componentId?.toString()}
-							onValueChange={value => setComponentId(value ? Number.parseInt(value) : null)}
+						<select
+							id="componentId"
+							value={formState.componentId?.toString() || ''}
+							onChange={e => dispatch({ type: 'SET_FIELD', field: 'componentId', value: e.target.value ? Number.parseInt(e.target.value) : null })}
 							disabled={isLoadingComponents || isErrorComponents}
 							required
-							>
-							<SelectTrigger className="w-full">
-								<SelectValue placeholder="Select component" />
-							</SelectTrigger>
-							<SelectContent>
-								{!isLoadingComponents && !isErrorComponents && components?.map(component => (
-									<SelectItem key={component.id} value={component.id.toString()}>
-										{component.name}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
+							className="w-full p-2 text-sm border rounded-md dark:bg-gray-900 dark:text-gray-300"
+						>
+							<option value="" disabled>Select component</option>
+							{!isLoadingComponents && !isErrorComponents && components?.map(component => (
+								<option key={component.id} value={component.id.toString()}>
+									{component.name}
+								</option>
+							))}
+						</select>
 					</div>
 				</div>
 
@@ -198,8 +206,8 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 						type="text"
 						placeholder="Enter check URL"
 						required
-						value={checkUrl}
-						onChange={e => setCheckUrl(e.target.value)}
+						value={formState.checkUrl}
+						onChange={e => dispatch({ type: 'SET_FIELD', field: 'checkUrl', value: e.target.value })}
 					/>
 				</div>
 
@@ -210,8 +218,8 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 							id="checkInterval"
 							type="number"
 							min={1}
-							value={checkInterval}
-							onChange={e => setCheckInterval(Number.parseInt(e.target.value))}
+							value={formState.checkInterval}
+							onChange={e => dispatch({ type: 'SET_FIELD', field: 'checkInterval', value: Number.parseInt(e.target.value) })}
 						/>
 					</div>
 
@@ -221,8 +229,8 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 							id="checkTimeout"
 							type="number"
 							min={1}
-							value={checkTimeout}
-							onChange={e => setCheckTimeout(Number.parseInt(e.target.value))}
+							value={formState.checkTimeout}
+							onChange={e => dispatch({ type: 'SET_FIELD', field: 'checkTimeout', value: Number.parseInt(e.target.value) })}
 						/>
 					</div>
 				</div>
@@ -232,8 +240,8 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 					<Textarea
 						id="requestHeaders"
 						placeholder="Enter request headers as JSON"
-						value={requestHeaders}
-						onChange={e => setRequestHeaders(e.target.value)}
+						value={formState.requestHeaders}
+						onChange={e => dispatch({ type: 'SET_FIELD', field: 'requestHeaders', value: e.target.value })}
 					/>
 				</div>
 
@@ -244,8 +252,8 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 							id="downAlertDelay"
 							type="number"
 							min={1}
-							value={downAlertDelay}
-							onChange={e => setDownAlertDelay(Number.parseInt(e.target.value))}
+							value={formState.downAlertDelay}
+							onChange={e => dispatch({ type: 'SET_FIELD', field: 'downAlertDelay', value: Number.parseInt(e.target.value) })}
 						/>
 					</div>
 
@@ -255,20 +263,19 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 							id="downAlertResend"
 							type="number"
 							min={1}
-							value={downAlertResend}
-							onChange={e => setDownAlertResend(Number.parseInt(e.target.value))}
+							value={formState.downAlertResend}
+							onChange={e => dispatch({ type: 'SET_FIELD', field: 'downAlertResend', value: Number.parseInt(e.target.value) })}
 						/>
 					</div>
 				</div>
 
 				<div className="grid gap-3">
 					<Label htmlFor="downAlertMessage">Down Alert Message</Label>
-					<Input
+					<Textarea
 						id="downAlertMessage"
-						type="text"
 						placeholder="Enter down alert message"
-						value={downAlertMessage}
-						onChange={e => setDownAlertMessage(e.target.value)}
+						value={formState.downAlertMessage}
+						onChange={e => dispatch({ type: 'SET_FIELD', field: 'downAlertMessage', value: e.target.value })}
 					/>
 				</div>
 
@@ -278,31 +285,17 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 						id="alertEmail"
 						type="email"
 						placeholder="Enter alert email"
-						value={alertEmail}
-						onChange={e => setAlertEmail(e.target.value)}
+						required
+						value={formState.alertEmail}
+						onChange={e => dispatch({ type: 'SET_FIELD', field: 'alertEmail', value: e.target.value })}
 					/>
 				</div>
 
-				{error && (
-					<Alert variant="destructive">
-						<Terminal />
-						<AlertTitle>Heads up!</AlertTitle>
-						<AlertDescription>{error.message}</AlertDescription>
-					</Alert>
-				)}
-
-				<div className="grid gap-3">
-					<Button type="submit" className="w-full" disabled={isPending} aria-haspopup="dialog">
-						{isPending
-							? check
-								? 'Updating...'
-								: 'Creating...'
-							: check
-								? 'Update Check'
-								: 'Create Check'}
-					</Button>
-				</div>
+				<Button type="submit" disabled={isPending}>
+					{isPending ? 'Saving...' : (check ? 'Update Check' : 'Create Check')}
+				</Button>
 			</div>
 		</form>
 	);
 }
+
