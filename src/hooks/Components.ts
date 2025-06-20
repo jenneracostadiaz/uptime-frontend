@@ -1,4 +1,4 @@
-import type {Component, System, Check} from '@/type/System';
+import type { Check, Component, System } from '@/type/System';
 import { useMemo } from 'react';
 
 interface useComponentsTableDataProps {
