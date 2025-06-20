@@ -1,0 +1,1 @@
+export const SystemAPI_URL = `${process.env.NEXT_PUBLIC_API_URL}/ServiceSystem`;
