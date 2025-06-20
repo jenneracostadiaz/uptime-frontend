@@ -10,7 +10,6 @@ import {
     SidebarMenuItem,
 } from '@/components/ui';
 
-import { NavSecondary } from '@/components/sidebar/NavSecondary';
 import { NavUser } from '@/components/sidebar/NavUser';
 import Link from 'next/link';
 
