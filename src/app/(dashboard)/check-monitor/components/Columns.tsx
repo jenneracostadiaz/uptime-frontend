@@ -1,4 +1,4 @@
-import { DelectCheck } from '@/app/(dashboard)/check-monitor/components/DelectCheck';
+import { DeleteCheck } from '@/app/(dashboard)/check-monitor/components/DeleteCheck';
 import { EditCheck } from '@/app/(dashboard)/check-monitor/components/EditCheck';
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui';
 import type { Check } from '@/type/System';
@@ -42,7 +42,7 @@ export const Columns: ColumnDef<Check>[] = [
                     <DropdownMenuContent align="end" className="w-32">
                         <EditCheck check={check} />
                         <DropdownMenuSeparator />
-                        <DelectCheck check={check} />
+                        <DeleteCheck check={check} />
                     </DropdownMenuContent>
                 </DropdownMenu>
             );
