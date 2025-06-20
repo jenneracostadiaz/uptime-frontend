@@ -21,7 +21,7 @@ import {
 
 import { NavUser } from '@/components/sidebar/NavUser';
 import Link from 'next/link';
-import {UptimeEventsExport_API_URL} from "@/conts/conts";
+import {UptimeEvents_API_URL, UptimeEventsExport_API_URL} from "@/conts/conts";
 
 export async function AppSidebar() {
     const user = {
@@ -47,7 +47,7 @@ export async function AppSidebar() {
                 },
                 {
                     title: 'Export Uptimes Event',
-                    url: UptimeEventsExport_API_URL,
+                    url: `${UptimeEvents_API_URL}/export`,
                     icon: Download,
                 }
             ],
