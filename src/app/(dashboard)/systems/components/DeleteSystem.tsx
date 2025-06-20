@@ -14,6 +14,7 @@ import {
 import type { System } from '@/type/System';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import {Systems_API_URL} from "@/conts/conts";
 
 export const DeleteSystem = ({ system }: { system: System }) => {
     const queryClient = useQueryClient();
@@ -21,19 +22,21 @@ export const DeleteSystem = ({ system }: { system: System }) => {
 
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
-            const res = await fetch('/api/systems', {
+            const res = await fetch(`${Systems_API_URL}/${system.id}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: system.id }),
             });
             if (!res.ok) {
                 const data = await res.json();
                 throw new Error(data.error || 'Failed to delete system');
             }
+            if (res.status === 204) {
+                return null;
+            }
             return res.json();
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['systems'] });
+            queryClient.invalidateQueries({queryKey: ['systems']}).then(r =>console.log(''));
             setOpen(false);
         },
     });
