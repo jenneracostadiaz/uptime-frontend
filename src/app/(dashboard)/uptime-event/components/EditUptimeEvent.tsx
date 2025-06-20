@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DropdownMenuItem} from "@/components/ui";
+import {FormUptimeEvent} from "@/app/(dashboard)/uptime-event/components/FormUptimeEvent";
 
 export const EditUptimeEvent = () => {
 	const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -11,7 +12,7 @@ export const EditUptimeEvent = () => {
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Edit System</DialogTitle>
-
+					<FormUptimeEvent />
 				</DialogHeader>
 			</DialogContent>
 		</Dialog>
