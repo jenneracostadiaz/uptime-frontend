@@ -10,7 +10,7 @@ export function useComponentsTableData({ components, systems }: useComponentsTab
     return useMemo(() => {
         if (!components || !systems) return [];
         return components.map(component => {
-            const system = systems.find(s => s.id === component.systemId);
+            const system = systems.find(s => s.id === component.serviceSystemId);
             return {
                 ...component,
                 systemName: system ? system.name : 'Unlinked',
