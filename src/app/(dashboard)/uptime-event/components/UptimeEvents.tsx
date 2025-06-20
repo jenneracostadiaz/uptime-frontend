@@ -55,7 +55,10 @@ export const UptimeEvents = () => {
 				</Alert>
 			)}
 
-			{!isError && (isLoading ? <SkeletonTable /> : uptimeEvents && <DataTable columns={Columns} data={tableData} />)}
+			{!isError && (isLoading
+				? <SkeletonTable />
+				: uptimeEvents && <DataTable columns={Columns} data={tableData} />
+			)}
 		</div>
 	);
 }
