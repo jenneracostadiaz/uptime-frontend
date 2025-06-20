@@ -1,4 +1,13 @@
-import {Clock, LaptopMinimal, LucideLayoutDashboard, Monitor, Package2, Settings, Terminal} from 'lucide-react';
+import {
+    Clock,
+    Download,
+    LaptopMinimal,
+    LucideLayoutDashboard,
+    Monitor,
+    Package2,
+    Settings,
+    Terminal
+} from 'lucide-react';
 
 import {
     Sidebar,
@@ -12,6 +21,7 @@ import {
 
 import { NavUser } from '@/components/sidebar/NavUser';
 import Link from 'next/link';
+import {UptimeEventsExport_API_URL} from "@/conts/conts";
 
 export async function AppSidebar() {
     const user = {
@@ -35,6 +45,11 @@ export async function AppSidebar() {
                     url: '/uptime-event',
                     icon: Clock,
                 },
+                {
+                    title: 'Export Uptimes Event',
+                    url: UptimeEventsExport_API_URL,
+                    icon: Download,
+                }
             ],
         },
         {
