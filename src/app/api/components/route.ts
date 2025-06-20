@@ -59,8 +59,14 @@ let data: Component[] = [
     },
 ];
 
-export async function GET() {
-    return new Response(JSON.stringify(data), {
+export async function GET(request: Request) {
+    const url = new URL(request.url);
+    const systemId = url.searchParams.get('systemId');
+    let result = data;
+    if (systemId) {
+        result = data.filter(component => component.systemId === Number(systemId));
+    }
+    return new Response(JSON.stringify(result), {
         status: 200,
         headers: {
             'Content-Type': 'application/json',
