@@ -7,11 +7,6 @@ import {
 	Alert, AlertDescription, AlertTitle, Button,
 	Input,
 	Label,
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
 	Textarea
 } from "@/components/ui";
 import {Terminal} from "lucide-react";
