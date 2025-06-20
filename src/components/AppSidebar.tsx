@@ -1,4 +1,4 @@
-import { LaptopMinimal, LucideLayoutDashboard, Package2, Terminal } from 'lucide-react';
+import {Clock, LaptopMinimal, LucideLayoutDashboard, Monitor, Package2, Terminal} from 'lucide-react';
 
 import {
     Sidebar,
@@ -40,7 +40,12 @@ export async function AppSidebar() {
         {
             title: 'Check Monitor',
             url: '/check-monitor',
-            icon: Terminal,
+            icon: Monitor,
+        },
+        {
+            title: 'Uptime Event',
+            url: '/uptime-event',
+            icon: Clock,
         },
     ];
 
