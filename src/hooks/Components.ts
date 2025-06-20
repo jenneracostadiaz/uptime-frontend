@@ -39,3 +39,20 @@ export function useChecksTableData({ checks, components, systems }: useChecksTab
         });
     }, [checks, components, systems]);
 }
+
+export function useUptimeEventsTableData({ uptimeEvents, checks, components, systems }) {
+    return useMemo(() => {
+        if (!uptimeEvents || !systems) return [];
+        return uptimeEvents.map(event => {
+            const check = checks?.find(c => c.id === event.uptimeCheckId);
+            const component = components?.find(c => c.id === event.componentId);
+            const system = systems?.find(s => s.id === event.serviceSystemId);
+            return {
+                ...event,
+                checkName: check ? check.name : 'Unknown Check',
+                componentName: component ? component.name : 'Unknown Component',
+                systemName: system ? system.name : 'Unknown System',
+            };
+        });
+    }, [uptimeEvents, systems]);
+}
