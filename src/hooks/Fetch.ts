@@ -1,10 +1,10 @@
 import type { Check, Component, System } from '@/type/System';
-import {SystemAPI_URL} from "@/conts/conts";
+import {Components_API_URL, Systems_API_URL} from "@/conts/conts";
 
 
 
 export const useFetchSystems = async (): Promise<System[]> => {
-    const response = await fetch(SystemAPI_URL, {});
+    const response = await fetch(Systems_API_URL);
     if (!response.ok) {
         throw new Error('Failed to fetch systems');
     }
@@ -12,7 +12,7 @@ export const useFetchSystems = async (): Promise<System[]> => {
 };
 
 export const useFetchComponents = async (): Promise<Component[]> => {
-    const response = await fetch('/api/components');
+    const response = await fetch(Components_API_URL);
     if (!response.ok) {
         throw new Error('Failed to fetch components');
     }
