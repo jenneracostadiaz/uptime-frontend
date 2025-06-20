@@ -1,5 +1,5 @@
 import type { Check, Component, System } from '@/type/System';
-import {Checks_API_URL, Components_API_URL, Systems_API_URL} from "@/conts/conts";
+import {Checks_API_URL, Components_API_URL, Systems_API_URL, UptimeEvents_API_URL} from "@/conts/conts";
 
 
 
@@ -34,3 +34,11 @@ export const useFetchChecks = async (): Promise<Check[]> => {
     }
     return response.json();
 };
+
+export const useFetchUptimeEvents = async (): Promise<any[]> => {
+    const response = await fetch(UptimeEvents_API_URL);
+    if (!response.ok) {
+        throw new Error('Failed to fetch uptime events');
+    }
+    return response.json();
+}
