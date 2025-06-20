@@ -2,7 +2,18 @@ import type{Check} from "@/type/System";
 import {useEffect, useState} from "react";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useFetchComponents, useFetchSystems} from "@/hooks/Fetch";
-import {Input, Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui";
+import {
+	Alert, AlertDescription, AlertTitle, Button,
+	Input,
+	Label,
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+	Textarea
+} from "@/components/ui";
+import {Terminal} from "lucide-react";
 
 interface FormCheckProps {
 	check?: Check;
@@ -217,13 +228,78 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 
 				<div className="grid gap-3">
 					<Label htmlFor="requestHeaders">Request Headers (JSON)</Label>
-					<Input
+					<Textarea
 						id="requestHeaders"
-						type="text"
 						placeholder="Enter request headers as JSON"
 						value={requestHeaders}
 						onChange={e => setRequestHeaders(e.target.value)}
 					/>
+				</div>
+
+				<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+					<div className="grid gap-3">
+						<Label htmlFor="downAlertDelay">Down Alert Delay (seconds)</Label>
+						<Input
+							id="downAlertDelay"
+							type="number"
+							min={1}
+							value={downAlertDelay}
+							onChange={e => setDownAlertDelay(Number.parseInt(e.target.value))}
+						/>
+					</div>
+
+					<div className="grid gap-3">
+						<Label htmlFor="downAlertResend">Down Alert Resend (seconds)</Label>
+						<Input
+							id="downAlertResend"
+							type="number"
+							min={1}
+							value={downAlertResend}
+							onChange={e => setDownAlertResend(Number.parseInt(e.target.value))}
+						/>
+					</div>
+				</div>
+
+				<div className="grid gap-3">
+					<Label htmlFor="downAlertMessage">Down Alert Message</Label>
+					<Input
+						id="downAlertMessage"
+						type="text"
+						placeholder="Enter down alert message"
+						value={downAlertMessage}
+						onChange={e => setDownAlertMessage(e.target.value)}
+					/>
+				</div>
+
+				<div className="grid gap-3">
+					<Label htmlFor="alertEmail">Alert Email</Label>
+					<Input
+						id="alertEmail"
+						type="email"
+						placeholder="Enter alert email"
+						value={alertEmail}
+						onChange={e => setAlertEmail(e.target.value)}
+					/>
+				</div>
+
+				{error && (
+					<Alert variant="destructive">
+						<Terminal />
+						<AlertTitle>Heads up!</AlertTitle>
+						<AlertDescription>{error.message}</AlertDescription>
+					</Alert>
+				)}
+
+				<div className="grid gap-3">
+					<Button type="submit" className="w-full" disabled={isPending} aria-haspopup="dialog">
+						{isPending
+							? check
+								? 'Updating...'
+								: 'Creating...'
+							: check
+								? 'Update Check'
+								: 'Create Check'}
+					</Button>
 				</div>
 			</div>
 		</form>
