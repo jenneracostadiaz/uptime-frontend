@@ -1,4 +1,4 @@
-import type { Check, Component, System } from '@/type/System';
+import type {Check, Component, System, UptimeEvent} from '@/type/System';
 import { useMemo } from 'react';
 
 interface useComponentsTableDataProps {
@@ -43,15 +43,15 @@ export function useChecksTableData({ checks, components, systems }: useChecksTab
 export function useUptimeEventsTableData({ uptimeEvents, checks, components, systems }) {
     return useMemo(() => {
         if (!uptimeEvents || !systems) return [];
-        return uptimeEvents.map(event => {
+        return uptimeEvents.map((event: UptimeEvent) => {
             const check = checks?.find(c => c.id === event.uptimeCheckId);
-            const component = components?.find(c => c.id === event.componentId);
-            const system = systems?.find(s => s.id === event.serviceSystemId);
+            const system = systems?.find(s => s.id === check.serviceSystemId);
+            const component = components?.find(c => c.id === check.componentId);
             return {
                 ...event,
                 checkName: check ? check.name : 'Unknown Check',
-                componentName: component ? component.name : 'Unknown Component',
                 systemName: system ? system.name : 'Unknown System',
+                componentName: component ? component.name : 'Unknown Component',
             };
         });
     }, [uptimeEvents, systems]);
