@@ -35,8 +35,9 @@ export const useFetchChecks = async (): Promise<Check[]> => {
     return response.json();
 };
 
-export const useFetchUptimeEvents = async (): Promise<any[]> => {
-    const response = await fetch(UptimeEvents_API_URL);
+export const useFetchUptimeEvents = async (filters: any = {}): Promise<any[]> => {
+    const query = new URLSearchParams(filters).toString();
+    const response = await fetch(`${UptimeEvents_API_URL}?${query}`);
     if (!response.ok) {
         throw new Error('Failed to fetch uptime events');
     }
