@@ -1,11 +1,12 @@
 'use client';
 
-import {Button, Input, Label, Textarea} from "@/components/ui";
+import {Alert, AlertDescription, AlertTitle, Button, Input, Label, Textarea} from "@/components/ui";
 import {Checkbox} from "@/components/ui/checkbox";
 import type {UptimeEvent} from "@/type/System";
 import {FormEvent, useState} from "react";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {UptimeEvents_API_URL} from "@/conts/conts";
+import {Terminal} from "lucide-react";
 
 interface FormUptimeEventProps {
 	event?: UptimeEvent;
@@ -133,6 +134,14 @@ export const FormUptimeEvent = ({event, onSuccess}: FormUptimeEventProps) => {
 						/>
 					</div>
 				</div>
+
+				{error && (
+					<Alert variant="destructive">
+						<Terminal />
+						<AlertTitle>Heads up!</AlertTitle>
+						<AlertDescription>{error.message}</AlertDescription>
+					</Alert>
+				)}
 
 				<div className="grid gap-3">
 					<Button type="submit" className="w-full" disabled={isPending} aria-haspopup="dialog">
