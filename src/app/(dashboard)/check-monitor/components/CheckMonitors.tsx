@@ -7,6 +7,7 @@ import { useChecksTableData } from '@/hooks/Components';
 import { useFetchChecks, useFetchComponents, useFetchSystems } from '@/hooks/Fetch';
 import { useQuery } from '@tanstack/react-query';
 import { Terminal } from 'lucide-react';
+import {CreateCheck} from "@/app/(dashboard)/check-monitor/components/CreateCheck";
 
 export const CheckMonitors = () => {
     const {
@@ -37,6 +38,7 @@ export const CheckMonitors = () => {
         <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between w-full">
                 <h1 className="text-2xl font-bold">Check Monitors</h1>
+				<CreateCheck />
             </div>
 
             {isError && (
