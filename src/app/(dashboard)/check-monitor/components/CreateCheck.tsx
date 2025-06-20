@@ -9,12 +9,12 @@ export const CreateCheck = () => {
     return (
         <Dialog open={isCreateModalOpen} onOpenChange={setCreateModalOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline">Create Component</Button>
+                <Button variant="outline">Create Check Monitor</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Add New Component</DialogTitle>
-                    <FormCheck onSuccess={() => setCreateModalOpen(true)} />
+                    <DialogTitle>Add New Check Monitor</DialogTitle>
+                    <FormCheck onSuccess={() => setCreateModalOpen(false)} />
                 </DialogHeader>
             </DialogContent>
         </Dialog>
