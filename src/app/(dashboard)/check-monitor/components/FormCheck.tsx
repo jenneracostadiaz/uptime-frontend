@@ -2,7 +2,7 @@ import type {Check} from "@/type/System";
 import {useEffect, useReducer, useState} from "react";
 import type {FormEvent} from "react";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {useFetchComponents, useFetchSystems} from "@/hooks/Fetch";
+import {useFetchComponentBySystemId, useFetchSystems} from "@/hooks/Fetch";
 import {
 	Alert, AlertDescription, AlertTitle, Button,
 	Input,
@@ -66,7 +66,11 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 		data: components,
 		isLoading: isLoadingComponents,
 		isError: isErrorComponents,
-	} = useQuery({queryKey: ['components'], queryFn: useFetchComponents});
+	} = useQuery({
+		queryKey: ['components', formState.serviceSystemId],
+		queryFn: () => useFetchComponentBySystemId(formState.serviceSystemId?.toString() || ''),
+		enabled: !!formState.serviceSystemId,
+	});
 
 	useEffect(() => {
 		if(check){
@@ -108,7 +112,7 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 			return res.json();
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['checks'] });
+			queryClient.invalidateQueries({queryKey: ['checks']}).then(r =>console.log('Invalidated checks query:', r));
 			dispatch({ type: 'RESET_FORM' });
 			if (onSuccess) onSuccess();
 		},
@@ -159,7 +163,11 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 						<select
 							id="serviceSystemId"
 							value={formState.serviceSystemId?.toString() || ''}
-							onChange={e => dispatch({ type: 'SET_FIELD', field: 'serviceSystemId', value: e.target.value ? Number.parseInt(e.target.value) : null })}
+							onChange={e => {
+								const value = e.target.value ? Number.parseInt(e.target.value) : null;
+								dispatch({ type: 'SET_FIELD', field: 'serviceSystemId', value });
+								dispatch({ type: 'SET_FIELD', field: 'componentId', value: null });
+							}}
 							disabled={isLoadingSystems || isErrorSystems}
 							required
 							className="w-full p-2 text-sm border rounded-md dark:bg-gray-900 dark:text-gray-300"
@@ -293,4 +301,3 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 		</form>
 	);
 }
-
