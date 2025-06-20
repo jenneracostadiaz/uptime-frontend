@@ -4,8 +4,16 @@ import {Badge} from "@/components/ui";
 
 export const Columns: ColumnDef<UptimeEvent>[] = [
 	{
-		accessorKey: "uptimeCheckId",
-		header: "Check ID",
+		accessorKey: "checkName",
+		header: "Check Name",
+	},
+	{
+		accessorKey: "systemName",
+		header: "System Name",
+	},
+	{
+		accessorKey: "componentName",
+		header: "Component Name",
 	},
 	{
 		accessorKey: "startTime",
