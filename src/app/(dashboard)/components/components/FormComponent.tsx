@@ -5,11 +5,6 @@ import {
     Button,
     Input,
     Label,
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
 } from '@/components/ui';
 import { useFetchSystems } from '@/hooks/Fetch';
 import type { Component } from '@/type/System';

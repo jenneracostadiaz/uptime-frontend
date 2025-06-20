@@ -36,7 +36,7 @@ export const DeleteSystem = ({ system }: { system: System }) => {
             return res.json();
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['systems']}).then(r =>console.log(''));
+            queryClient.invalidateQueries({queryKey: ['systems']}).then(r =>console.log(r));
             setOpen(false);
         },
     });
