@@ -36,9 +36,8 @@ const initialState: FormState = {
 };
 
 type FormAction =
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  | { type: 'SET_FIELD'; field: keyof FormState; value: any}
-  | { type: 'RESET_FORM'; payload?: FormState };
+	| { type: 'SET_FIELD'; field: keyof FormState; value: string | number | null }
+	| { type: 'RESET_FORM'; payload?: FormState };
 
 const formReducer = (state: FormState, action: FormAction): FormState => {
   switch (action.type) {
