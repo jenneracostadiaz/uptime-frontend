@@ -2,6 +2,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DropdownMenuItem } from '@/components/ui';
 import type { Check } from '@/type/System';
 import { useState } from 'react';
+import {FormCheck} from "@/app/(dashboard)/check-monitor/components/FormCheck";
 
 interface EditCheckProps {
     check: Check;
@@ -17,7 +18,7 @@ export const EditCheck = ({ check }: EditCheckProps) => {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Edit System</DialogTitle>
-                    {check.name}
+                    <FormCheck check={check} onSuccess={() => setEditModalOpen(false)} />
                 </DialogHeader>
             </DialogContent>
         </Dialog>

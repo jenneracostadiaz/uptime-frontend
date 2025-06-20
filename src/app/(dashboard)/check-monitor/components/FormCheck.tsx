@@ -1,5 +1,6 @@
 import type{Check} from "@/type/System";
 import {useEffect, useState} from "react";
+import type {FormEvent} from "react";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useFetchComponents, useFetchSystems} from "@/hooks/Fetch";
 import {
@@ -109,7 +110,7 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 		},
 	});
 
-	const handleSubmit = async (e: React.FormEvent) => {
+	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 		if (serviceSystemId === null || componentId === null) {
 			alert('Please select a system and component');
@@ -149,7 +150,7 @@ export const FormCheck = ({check, onSuccess}:FormCheckProps) => {
 					<div className="grid gap-3">
 						<Label htmlFor="serviceSystemId">Service System</Label>
 						<Select
-							value={serviceSystemId?.toString()}
+							defaultValue={serviceSystemId?.toString()}
 							onValueChange={value => setServiceSystemId(value ? Number.parseInt(value) : null)}
 							disabled={isLoadingSystems || isErrorSystems}
 							required
