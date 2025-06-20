@@ -14,6 +14,7 @@ import {
 import type { Component } from '@/type/System';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import {Components_API_URL} from "@/conts/conts";
 
 export const DeleteComponent = ({ component }: { component: Component }) => {
     const queryClient = useQueryClient();
@@ -21,14 +22,16 @@ export const DeleteComponent = ({ component }: { component: Component }) => {
 
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
-            const res = await fetch('/api/components', {
+            const res = await fetch(`${Components_API_URL}/${component.id}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: component.id }),
             });
             if (!res.ok) {
                 const data = await res.json();
                 throw new Error(data.error || 'Failed to delete component');
+            }
+            if (res.status === 204) {
+                return null;
             }
             return res.json();
         },
