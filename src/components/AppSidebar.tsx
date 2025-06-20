@@ -1,9 +1,9 @@
-import {Clock, LaptopMinimal, LucideLayoutDashboard, Monitor, Package2, Terminal} from 'lucide-react';
+import {Clock, LaptopMinimal, LucideLayoutDashboard, Monitor, Package2, Settings, Terminal} from 'lucide-react';
 
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter,
+    SidebarFooter, SidebarGroup,
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
@@ -28,24 +28,36 @@ export async function AppSidebar() {
             icon: LucideLayoutDashboard,
         },
         {
-            title: 'Systems',
-            url: '/systems',
+            title: 'Reports',
             icon: LaptopMinimal,
+            children: [
+                {
+                    title: 'Uptime Event',
+                    url: '/uptime-event',
+                    icon: Clock,
+                },
+            ],
         },
         {
-            title: 'Components',
-            url: '/components',
-            icon: Package2,
-        },
-        {
-            title: 'Check Monitor',
-            url: '/check-monitor',
-            icon: Monitor,
-        },
-        {
-            title: 'Uptime Event',
-            url: '/uptime-event',
-            icon: Clock,
+            title: 'Settings',
+            icon: Settings,
+            children: [
+                {
+                    title: 'Systems',
+                    url: '/systems',
+                    icon: LaptopMinimal,
+                },
+                {
+                    title: 'Components',
+                    url: '/components',
+                    icon: Package2,
+                },
+                {
+                    title: 'Check Monitor',
+                    url: '/check-monitor',
+                    icon: Monitor,
+                },
+            ],
         },
     ];
 
@@ -69,7 +81,47 @@ export async function AppSidebar() {
                 </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
-                <NavSecondary items={navItems} />
+                <SidebarGroup>
+                    <SidebarMenu>
+                        {navItems.map((item) =>
+                                item.children ? (
+                                    <SidebarMenuItem key={item.title}>
+                                        <SidebarMenuButton>
+                                            <div className="flex items-center gap-2">
+                                                <item.icon className="size-4" />
+                                                <span>{item.title}</span>
+                                            </div>
+                                        </SidebarMenuButton>
+                                        <SidebarMenu>
+                                            {item.children.map((child) => (
+                                                <SidebarMenuItem key={child.title}>
+                                                    <SidebarMenuButton asChild>
+                                                        <Link href={child.url}>
+                                                            <div className="flex items-center gap-2 ml-4">
+                                                                <child.icon className="size-4" />
+                                                                <span className="text-xs">{child.title}</span>
+                                                            </div>
+                                                        </Link>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                            ))}
+                                        </SidebarMenu>
+                                    </SidebarMenuItem>
+                                ) : (
+                                    <SidebarMenuItem key={item.title}>
+                                        <SidebarMenuButton asChild>
+                                            <Link href={item.url}>
+                                                <div className="flex items-center gap-2">
+                                                    <item.icon className="size-4" />
+                                                    <span>{item.title}</span>
+                                                </div>
+                                            </Link>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                )
+                        )}
+                    </SidebarMenu>
+                </SidebarGroup>
             </SidebarContent>
             <SidebarFooter>
                 <NavUser user={user} />
