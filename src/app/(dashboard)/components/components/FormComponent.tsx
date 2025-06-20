@@ -5,11 +5,6 @@ import {
     Button,
     Input,
     Label,
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
 } from '@/components/ui';
 import { useFetchSystems } from '@/hooks/Fetch';
 import type { Component } from '@/type/System';
@@ -17,6 +12,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Terminal } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
+import {Components_API_URL} from "@/conts/conts";
 
 interface FormComponentProps {
     component?: Component;
@@ -26,7 +22,7 @@ interface FormComponentProps {
 export const FormComponent = ({ component, onSuccess }: FormComponentProps) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [systemId, setSystemId] = useState<number | null>(null);
+    const [serviceSystemId, setServiceSystemId] = useState<number | null>(null);
     const queryClient = useQueryClient();
 
     const {
@@ -39,18 +35,19 @@ export const FormComponent = ({ component, onSuccess }: FormComponentProps) => {
         if (component) {
             setName(component.name);
             setDescription(component.description);
-            setSystemId(component.systemId);
+            setServiceSystemId(component.serviceSystemId);
         }
     }, [component]);
 
     const { mutate, isPending, error } = useMutation({
-        mutationFn: async (newComponent: { name: string; description: string; systemId: number }) => {
+        mutationFn: async (newComponent: { name: string; description: string; serviceSystemId: number }) => {
             const method = component ? 'PUT' : 'POST';
             const body = component
                 ? JSON.stringify({ id: component.id, ...newComponent })
                 : JSON.stringify(newComponent);
 
-            const res = await fetch('/api/components', {
+            const url = component ? `${Components_API_URL}/${component.id}` : Components_API_URL;
+            const res = await fetch(url, {
                 method,
                 headers: { 'Content-Type': 'application/json' },
                 body,
@@ -65,18 +62,18 @@ export const FormComponent = ({ component, onSuccess }: FormComponentProps) => {
             queryClient.invalidateQueries({ queryKey: ['components'] }).then(r => console.log(r));
             setName('');
             setDescription('');
-            setSystemId(null);
+            setServiceSystemId(null);
             if (onSuccess) onSuccess();
         },
     });
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        if (systemId === null) {
+        if (serviceSystemId === null) {
             alert('Please select a component');
             return;
         }
-        mutate({ name, description, systemId });
+        mutate({ name, description, serviceSystemId: serviceSystemId });
     };
 
     return (
@@ -107,26 +104,26 @@ export const FormComponent = ({ component, onSuccess }: FormComponentProps) => {
                 </div>
 
                 <div className="grid gap-3">
-                    <Label htmlFor="systemId">System</Label>
-                    <Select
-                        value={systemId?.toString()}
-                        onValueChange={value => setSystemId(value ? Number.parseInt(value) : null)}
+                    <Label htmlFor="serviceSystemId">System</Label>
+                    <select
+                        id="serviceSystemId"
+                        value={serviceSystemId?.toString() || ''}
+                        onChange={e => setServiceSystemId(e.target.value ? Number.parseInt(e.target.value) : null)}
                         disabled={isLoadingSystems || isErrorSystems}
                         required
-                    >
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder="System" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {!isLoadingSystems &&
-                                !isErrorSystems &&
-                                systems?.map(system => (
-                                    <SelectItem key={system.id} value={system.id.toString()}>
-                                        {system.name}
-                                    </SelectItem>
-                                ))}
-                        </SelectContent>
-                    </Select>
+                        className="w-full p-2 text-sm border rounded-md dark:bg-gray-900 dark:text-gray-300"
+                        >
+                        <option value="" disabled>
+                            Select a system
+                        </option>
+                        {!isLoadingSystems &&
+                            !isErrorSystems &&
+                            systems?.map(system => (
+                                <option key={system.id} value={system.id.toString()}>
+                                    {system.name}
+                                </option>
+                            ))}
+                    </select>
                 </div>
 
                 {error && (

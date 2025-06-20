@@ -1,31 +1,30 @@
-import { LaptopMinimal, LucideLayoutDashboard, Package2, Terminal } from 'lucide-react';
+import {
+    Clock,
+    Download,
+    LaptopMinimal,
+    LucideLayoutDashboard,
+    Monitor,
+    Package2,
+    Settings,
+    Terminal
+} from 'lucide-react';
 
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter,
+    SidebarFooter, SidebarGroup,
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui';
 
-import { auth } from '@/app/api/auth/[...nextauth]/route';
-import { NavSecondary } from '@/components/sidebar/NavSecondary';
 import { NavUser } from '@/components/sidebar/NavUser';
-import type { User } from '@/type/User';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import {UptimeEventsExport_API_URL} from "@/conts/conts";
 
 export async function AppSidebar() {
-    const session = await auth();
-
-    if (!session) {
-        redirect('/login');
-    }
-
-    // @ts-ignore
-    const user: User = session.user ?? {
+    const user = {
         id: 1,
         name: 'Guest',
         email: 'guest@example.com',
@@ -38,19 +37,41 @@ export async function AppSidebar() {
             icon: LucideLayoutDashboard,
         },
         {
-            title: 'Systems',
-            url: '/systems',
+            title: 'Reports',
             icon: LaptopMinimal,
+            children: [
+                {
+                    title: 'Uptime Event',
+                    url: '/uptime-event',
+                    icon: Clock,
+                },
+                {
+                    title: 'Export Uptimes Event',
+                    url: UptimeEventsExport_API_URL,
+                    icon: Download,
+                }
+            ],
         },
         {
-            title: 'Components',
-            url: '/components',
-            icon: Package2,
-        },
-        {
-            title: 'Check Monitor',
-            url: '/check-monitor',
-            icon: Terminal,
+            title: 'Settings',
+            icon: Settings,
+            children: [
+                {
+                    title: 'Systems',
+                    url: '/systems',
+                    icon: LaptopMinimal,
+                },
+                {
+                    title: 'Components',
+                    url: '/components',
+                    icon: Package2,
+                },
+                {
+                    title: 'Check Monitor',
+                    url: '/check-monitor',
+                    icon: Monitor,
+                },
+            ],
         },
     ];
 
@@ -60,7 +81,7 @@ export async function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="/public">
+                            <Link href="/">
                                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                                     <Terminal className="size-4" />
                                 </div>
@@ -74,7 +95,47 @@ export async function AppSidebar() {
                 </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
-                <NavSecondary items={navItems} />
+                <SidebarGroup>
+                    <SidebarMenu>
+                        {navItems.map((item) =>
+                                item.children ? (
+                                    <SidebarMenuItem key={item.title}>
+                                        <SidebarMenuButton>
+                                            <div className="flex items-center gap-2">
+                                                <item.icon className="size-4" />
+                                                <span>{item.title}</span>
+                                            </div>
+                                        </SidebarMenuButton>
+                                        <SidebarMenu>
+                                            {item.children.map((child) => (
+                                                <SidebarMenuItem key={child.title}>
+                                                    <SidebarMenuButton asChild>
+                                                        <Link href={child.url}>
+                                                            <div className="flex items-center gap-2 ml-4">
+                                                                <child.icon className="size-4" />
+                                                                <span className="text-xs">{child.title}</span>
+                                                            </div>
+                                                        </Link>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                            ))}
+                                        </SidebarMenu>
+                                    </SidebarMenuItem>
+                                ) : (
+                                    <SidebarMenuItem key={item.title}>
+                                        <SidebarMenuButton asChild>
+                                            <Link href={item.url}>
+                                                <div className="flex items-center gap-2">
+                                                    <item.icon className="size-4" />
+                                                    <span>{item.title}</span>
+                                                </div>
+                                            </Link>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                )
+                        )}
+                    </SidebarMenu>
+                </SidebarGroup>
             </SidebarContent>
             <SidebarFooter>
                 <NavUser user={user} />

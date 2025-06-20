@@ -15,26 +15,29 @@ import {
 import type { Check } from '@/type/System';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import {Checks_API_URL} from "@/conts/conts";
 
-export const DelectCheck = ({ check }: { check: Check }) => {
+export const DeleteCheck = ({ check }: { check: Check }) => {
     const queryClient = useQueryClient();
     const [open, setOpen] = useState(false);
 
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
-            const res = await fetch('/api/checks', {
+            const res = await fetch(`${Checks_API_URL}/${check.id}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: check.id }),
             });
             if (!res.ok) {
                 const data = await res.json();
                 throw new Error(data.error || 'Failed to delete check');
             }
+            if (res.status === 204) {
+                return null;
+            }
             return res.json();
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['checks'] });
+            queryClient.invalidateQueries({queryKey: ['checks']}).then(r =>console.log(r));
             setOpen(false);
         },
     });

@@ -20,7 +20,7 @@ export const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData
     return (
         <div className="rounded-md border overflow-hidden">
             <Table>
-                <TableHeader className="bg-muted sticky top-0 z-10">
+                <TableHeader className="bg-muted">
                     {table.getHeaderGroups().map(headerGroup => (
                         <TableRow key={headerGroup.id}>
                             {headerGroup.headers.map(header => {
