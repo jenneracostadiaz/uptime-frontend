@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Terminal } from 'lucide-react';
 import { useEffect, useReducer, useState } from 'react';
 import type { FormEvent } from 'react';
+import {Checks_API_URL} from "@/conts/conts";
 
 interface FormCheckProps {
     check?: Check;
@@ -92,7 +93,8 @@ export const FormCheck = ({ check, onSuccess }: FormCheckProps) => {
             const method = check ? 'PUT' : 'POST';
             const body = check ? JSON.stringify({ id: check.id, ...newCheck }) : JSON.stringify(newCheck);
 
-            const res = await fetch('/api/checks', {
+            const url = check ? `${Checks_API_URL}/${check.id}` : Checks_API_URL;
+            const res = await fetch(url, {
                 method,
                 headers: { 'Content-Type': 'application/json' },
                 body,
