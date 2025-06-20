@@ -2,7 +2,7 @@ import { Button, Input, Label } from '@/components/ui';
 import type { System } from '@/type/System';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { type FormEvent, useEffect, useState } from 'react';
-import {SystemAPI_URL} from "@/conts/conts";
+import {Systems_API_URL} from "@/conts/conts";
 
 interface FormSystemProps {
     system?: System;
@@ -26,7 +26,7 @@ export const FormSystem = ({ system, onSuccess }: FormSystemProps) => {
             const method = system ? 'PUT' : 'POST';
             const body = system ? JSON.stringify({ id: system.id, ...newSystem }) : JSON.stringify(newSystem);
 
-            const url = system ? `${SystemAPI_URL}/${system.id}` : SystemAPI_URL;
+            const url = system ? `${Systems_API_URL}/${system.id}` : Systems_API_URL;
             const res = await fetch(url, {
                 method,
                 headers: { 'Content-Type': 'application/json' },
