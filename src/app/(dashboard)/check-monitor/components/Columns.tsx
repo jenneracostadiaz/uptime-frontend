@@ -11,6 +11,14 @@ export const Columns: ColumnDef<Check>[] = [
 		header: 'Name',
 	},
 	{
+		accessorKey: 'systemName',
+		header: 'System',
+	},
+	{
+		accessorKey: 'componentName',
+		header: 'Component',
+	},
+	{
 		accessorKey: 'checkUrl',
 		header: 'Check URL',
 	},

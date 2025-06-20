@@ -15,8 +15,20 @@ export const CheckMonitors = () => {
 		queryFn: useFetchChecks,
 	});
 
+	const {data: components} = useQuery({
+		queryKey: ['components'],
+		queryFn: useFetchComponents,
+	});
+
+	const {data: systems} = useQuery({
+		queryKey: ['systems'],
+		queryFn: useFetchSystems,
+	});
+
 	const isLoading = isLoadingChecks;
 	const isError = isErrorChecks;
+
+	const tableData = useChecksTableData({checks, components, systems});
 
 	return (
 		<div className="flex flex-col gap-4">
@@ -33,7 +45,7 @@ export const CheckMonitors = () => {
 			)}
 
 			{!isError &&
-				(isLoading ? <SkeletonTable /> : checks && <DataTable data={checks} columns={Columns} />)}
+				(isLoading ? <SkeletonTable /> : checks && <DataTable data={tableData} columns={Columns} />)}
 		</div>
 	);
 }

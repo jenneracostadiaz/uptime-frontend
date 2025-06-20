@@ -25,17 +25,17 @@ interface useChecksTableDataProps {
     systems?: System[];
 }
 
-export function useChecksTableData({ checks }: useChecksTableDataProps) {
+export function useChecksTableData({ checks, components, systems }: useChecksTableDataProps) {
     return useMemo(() => {
-        if (!checks) return [];
+        if (!checks || !components || !systems) return [];
         return checks.map((check: Check) => {
-            // const component = components.find(c => c.id === check.componentId);
-            // const system = systems.find(s => s.id === check.serviceSystemId);
+            const component = components.find(c => c.id === check.componentId);
+            const system = systems.find(s => s.id === check.serviceSystemId);
             return {
                 ...check,
-                // systemName: system?.name ?? '',
-                // componentName: component?.name ?? '',
+                systemName: system?.name ?? '',
+                componentName: component?.name ?? '',
             };
         });
-    }, [checks]);
+    }, [checks, components, systems]);
 }
