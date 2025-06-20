@@ -1,11 +1,12 @@
 'use client';
 
-import {useFetchUptimeEvents} from "@/hooks/Fetch";
+import {useFetchChecks, useFetchUptimeEvents} from "@/hooks/Fetch";
 import { useQuery } from '@tanstack/react-query';
 import {Alert, AlertDescription, AlertTitle, SkeletonTable} from "@/components/ui";
 import {Terminal} from "lucide-react";
 import {DataTable} from "@/components/DataTable";
 import {Columns} from "@/app/(dashboard)/uptime-event/components/Columns";
+import {useUptimeEventsTableData} from "@/hooks/Components";
 
 export const UptimeEvents = () => {
 	const  {
@@ -16,6 +17,29 @@ export const UptimeEvents = () => {
 		queryKey: ['uptimeEvents'],
 		queryFn: useFetchUptimeEvents,
 	});
+
+	const {
+		data: checks
+	} = useQuery({
+		queryKey: ['checks'],
+		queryFn: () => useFetchChecks(),
+	});
+
+	const {
+		data: components
+	} = useQuery({
+		queryKey: ['components'],
+		queryFn: () => useFetchChecks(),
+	});
+
+	const {
+		data: systems
+	} = useQuery({
+		queryKey: ['systems'],
+		queryFn: () => useFetchChecks(),
+	});
+
+	const tableData = useUptimeEventsTableData({uptimeEvents, checks, components, systems});
 
 	return (
 		<div className="flex flex-col gap-4">
@@ -31,7 +55,7 @@ export const UptimeEvents = () => {
 				</Alert>
 			)}
 
-			{!isError && (isLoading ? <SkeletonTable /> : uptimeEvents && <DataTable columns={Columns} data={uptimeEvents} />)}
+			{!isError && (isLoading ? <SkeletonTable /> : uptimeEvents && <DataTable columns={Columns} data={tableData} />)}
 		</div>
 	);
 }
