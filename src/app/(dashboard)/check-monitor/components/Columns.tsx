@@ -19,8 +19,8 @@ export const Columns: ColumnDef<Check>[] = [
         header: 'Component',
     },
     {
-        accessorKey: 'checkUrl',
-        header: 'Check URL',
+        accessorKey: 'alertEmail',
+        header: 'Alert Email',
     },
     {
         id: 'actions',
