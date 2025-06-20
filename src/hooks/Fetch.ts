@@ -14,7 +14,7 @@ export const useFetchComponentBySystemId = async (systemId: string): Promise<Com
         throw new Error('Failed to fetch components for system');
     }
     return response.json();
-}
+};
 
 export const useFetchSystems = async (): Promise<System[]> => {
     const response = await fetch('/api/systems');

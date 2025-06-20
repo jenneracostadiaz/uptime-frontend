@@ -15,7 +15,6 @@ import { NavUser } from '@/components/sidebar/NavUser';
 import Link from 'next/link';
 
 export async function AppSidebar() {
-
     const user = {
         id: 1,
         name: 'Guest',
