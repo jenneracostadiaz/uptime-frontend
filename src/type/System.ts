@@ -10,7 +10,7 @@ export type Component = {
     name: string;
     description: string;
     status: boolean;
-    systemId: number;
+    serviceSystemId: number;
 };
 
 export type Check = {
