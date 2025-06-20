@@ -10,22 +10,13 @@ import {
     SidebarMenuItem,
 } from '@/components/ui';
 
-import { auth } from '@/app/api/auth/[...nextauth]/route';
 import { NavSecondary } from '@/components/sidebar/NavSecondary';
 import { NavUser } from '@/components/sidebar/NavUser';
-import type { User } from '@/type/User';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 
 export async function AppSidebar() {
-    const session = await auth();
 
-    if (!session) {
-        redirect('/login');
-    }
-
-    // @ts-ignore
-    const user: User = session.user ?? {
+    const user = {
         id: 1,
         name: 'Guest',
         email: 'guest@example.com',
