@@ -5,7 +5,6 @@ import {
 	Button,
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger
 } from "@/components/ui";
 import {MoreVertical} from "lucide-react";
