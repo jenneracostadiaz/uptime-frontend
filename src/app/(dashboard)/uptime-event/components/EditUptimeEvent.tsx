@@ -1,8 +1,13 @@
 import {useState} from "react";
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DropdownMenuItem} from "@/components/ui";
 import {FormUptimeEvent} from "@/app/(dashboard)/uptime-event/components/FormUptimeEvent";
+import {UptimeEvent} from "@/type/System";
 
-export const EditUptimeEvent = () => {
+interface EditUptimeEventProps {
+	event: UptimeEvent;
+}
+
+export const EditUptimeEvent = ({event}:EditUptimeEventProps) => {
 	const [isEditModalOpen, setEditModalOpen] = useState(false);
 	return (
 		<Dialog open={isEditModalOpen} onOpenChange={setEditModalOpen}>
@@ -12,7 +17,7 @@ export const EditUptimeEvent = () => {
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Edit System</DialogTitle>
-					<FormUptimeEvent />
+					<FormUptimeEvent event={event} onSuccess={() => setEditModalOpen(false)} />
 				</DialogHeader>
 			</DialogContent>
 		</Dialog>
