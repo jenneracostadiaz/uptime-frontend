@@ -9,6 +9,7 @@ import {Columns} from "@/app/(dashboard)/uptime-event/components/Columns";
 import {useUptimeEventsTableData} from "@/hooks/Components";
 import {FilterUptimeEvents} from "@/app/(dashboard)/uptime-event/components/FilterUptimeEvents";
 import {useState} from "react";
+import {ExportForm} from "@/app/(dashboard)/uptime-event/components/ExportForm";
 
 export const UptimeEvents = () => {
     const [filters, setFilters] = useState({});
@@ -49,6 +50,7 @@ export const UptimeEvents = () => {
 		<div className="flex flex-col gap-4">
 			<div className="flex items-center justify-between w-full">
 				<h1 className="text-2xl font-bold">Uptime Events</h1>
+				<ExportForm />
 			</div>
 
             <FilterUptimeEvents
