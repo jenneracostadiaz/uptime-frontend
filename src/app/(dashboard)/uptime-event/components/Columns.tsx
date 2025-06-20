@@ -9,6 +9,7 @@ import {
 	DropdownMenuTrigger
 } from "@/components/ui";
 import {MoreVertical} from "lucide-react";
+import {EditUptimeEvent} from "@/app/(dashboard)/uptime-event/components/EditUptimeEvent";
 
 export const Columns: ColumnDef<UptimeEvent>[] = [
 	{
@@ -92,9 +93,7 @@ export const Columns: ColumnDef<UptimeEvent>[] = [
 							</div>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end" className="w-32">
-							{/*<EditCheck check={check} />*/}
-							<DropdownMenuSeparator />
-							{/*<DeleteCheck check={check} />*/}
+							<EditUptimeEvent event={event} />
 						</DropdownMenuContent>
 					</DropdownMenu>
 			);
