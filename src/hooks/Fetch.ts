@@ -33,8 +33,10 @@ export const useFetchChecks = async (): Promise<Check[]> => {
     return response.json();
 };
 
-export const useFetchUptimeEvents = async (filters: any = {}): Promise<any[]> => {
-    const query = new URLSearchParams(filters).toString();
+export const useFetchUptimeEvents = async (filters: Record<string, string | number>): Promise<unknown[]> => {
+    const query = new URLSearchParams(
+        Object.fromEntries(Object.entries(filters).map(([k, v]) => [k, String(v)]))
+    ).toString();
     const response = await fetch(`${UptimeEvents_API_URL}?${query}`);
     if (!response.ok) {
         throw new Error('Failed to fetch uptime events');

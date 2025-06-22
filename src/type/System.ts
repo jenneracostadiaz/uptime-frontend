@@ -35,8 +35,8 @@ export type UptimeEvent = {
     endTime: string;
     isUp: boolean;
     isFalsePositive: boolean;
-    category: any;
+    category: string;
     note: string;
-    jiraTicket: any;
-    maintenanceType: any;
+    jiraTicket: string;
+    maintenanceType: string;
 };
