@@ -39,4 +39,4 @@ export type UptimeEvent = {
     note: string;
     jiraTicket: any;
     maintenanceType: any;
-}
+};

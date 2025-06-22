@@ -12,10 +12,10 @@ import {
     AlertDialogTrigger,
     DropdownMenuItem,
 } from '@/components/ui';
+import { Checks_API_URL } from '@/conts/conts';
 import type { Check } from '@/type/System';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import {Checks_API_URL} from "@/conts/conts";
 
 export const DeleteCheck = ({ check }: { check: Check }) => {
     const queryClient = useQueryClient();
@@ -37,7 +37,7 @@ export const DeleteCheck = ({ check }: { check: Check }) => {
             return res.json();
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['checks']}).then(r =>console.log(r));
+            queryClient.invalidateQueries({ queryKey: ['checks'] }).then(r => console.log(r));
             setOpen(false);
         },
     });

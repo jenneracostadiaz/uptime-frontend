@@ -11,10 +11,10 @@ import {
     AlertDialogTrigger,
     DropdownMenuItem,
 } from '@/components/ui';
+import { Systems_API_URL } from '@/conts/conts';
 import type { System } from '@/type/System';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import {Systems_API_URL} from "@/conts/conts";
 
 export const DeleteSystem = ({ system }: { system: System }) => {
     const queryClient = useQueryClient();
@@ -36,7 +36,7 @@ export const DeleteSystem = ({ system }: { system: System }) => {
             return res.json();
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['systems']}).then(r =>console.log(r));
+            queryClient.invalidateQueries({ queryKey: ['systems'] }).then(r => console.log(r));
             setOpen(false);
         },
     });

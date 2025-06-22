@@ -11,10 +11,10 @@ import {
     AlertDialogTrigger,
     DropdownMenuItem,
 } from '@/components/ui';
+import { Components_API_URL } from '@/conts/conts';
 import type { Component } from '@/type/System';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import {Components_API_URL} from "@/conts/conts";
 
 export const DeleteComponent = ({ component }: { component: Component }) => {
     const queryClient = useQueryClient();

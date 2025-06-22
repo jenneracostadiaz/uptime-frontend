@@ -1,11 +1,11 @@
 import { Alert, AlertDescription, AlertTitle, Button, Input, Label, Textarea } from '@/components/ui';
+import { Checks_API_URL } from '@/conts/conts';
 import { useFetchComponentBySystemId, useFetchSystems } from '@/hooks/Fetch';
 import type { Check } from '@/type/System';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Terminal } from 'lucide-react';
 import { useEffect, useReducer, useState } from 'react';
 import type { FormEvent } from 'react';
-import {Checks_API_URL} from "@/conts/conts";
 
 interface FormCheckProps {
     check?: Check;

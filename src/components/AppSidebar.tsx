@@ -6,13 +6,14 @@ import {
     Monitor,
     Package2,
     Settings,
-    Terminal
+    Terminal,
 } from 'lucide-react';
 
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter, SidebarGroup,
+    SidebarFooter,
+    SidebarGroup,
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
@@ -20,8 +21,8 @@ import {
 } from '@/components/ui';
 
 import { NavUser } from '@/components/sidebar/NavUser';
+import { UptimeEvents_API_URL } from '@/conts/conts';
 import Link from 'next/link';
-import {UptimeEvents_API_URL, UptimeEventsExport_API_URL} from "@/conts/conts";
 
 export async function AppSidebar() {
     const user = {
@@ -49,7 +50,7 @@ export async function AppSidebar() {
                     title: 'Export Uptimes Event',
                     url: `${UptimeEvents_API_URL}/export`,
                     icon: Download,
-                }
+                },
             ],
         },
         {
@@ -97,42 +98,42 @@ export async function AppSidebar() {
             <SidebarContent>
                 <SidebarGroup>
                     <SidebarMenu>
-                        {navItems.map((item) =>
-                                item.children ? (
-                                    <SidebarMenuItem key={item.title}>
-                                        <SidebarMenuButton>
+                        {navItems.map(item =>
+                            item.children ? (
+                                <SidebarMenuItem key={item.title}>
+                                    <SidebarMenuButton>
+                                        <div className="flex items-center gap-2">
+                                            <item.icon className="size-4" />
+                                            <span>{item.title}</span>
+                                        </div>
+                                    </SidebarMenuButton>
+                                    <SidebarMenu>
+                                        {item.children.map(child => (
+                                            <SidebarMenuItem key={child.title}>
+                                                <SidebarMenuButton asChild>
+                                                    <Link href={child.url}>
+                                                        <div className="flex items-center gap-2 ml-4">
+                                                            <child.icon className="size-4" />
+                                                            <span className="text-xs">{child.title}</span>
+                                                        </div>
+                                                    </Link>
+                                                </SidebarMenuButton>
+                                            </SidebarMenuItem>
+                                        ))}
+                                    </SidebarMenu>
+                                </SidebarMenuItem>
+                            ) : (
+                                <SidebarMenuItem key={item.title}>
+                                    <SidebarMenuButton asChild>
+                                        <Link href={item.url}>
                                             <div className="flex items-center gap-2">
                                                 <item.icon className="size-4" />
                                                 <span>{item.title}</span>
                                             </div>
-                                        </SidebarMenuButton>
-                                        <SidebarMenu>
-                                            {item.children.map((child) => (
-                                                <SidebarMenuItem key={child.title}>
-                                                    <SidebarMenuButton asChild>
-                                                        <Link href={child.url}>
-                                                            <div className="flex items-center gap-2 ml-4">
-                                                                <child.icon className="size-4" />
-                                                                <span className="text-xs">{child.title}</span>
-                                                            </div>
-                                                        </Link>
-                                                    </SidebarMenuButton>
-                                                </SidebarMenuItem>
-                                            ))}
-                                        </SidebarMenu>
-                                    </SidebarMenuItem>
-                                ) : (
-                                    <SidebarMenuItem key={item.title}>
-                                        <SidebarMenuButton asChild>
-                                            <Link href={item.url}>
-                                                <div className="flex items-center gap-2">
-                                                    <item.icon className="size-4" />
-                                                    <span>{item.title}</span>
-                                                </div>
-                                            </Link>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                )
+                                        </Link>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+                            )
                         )}
                     </SidebarMenu>
                 </SidebarGroup>

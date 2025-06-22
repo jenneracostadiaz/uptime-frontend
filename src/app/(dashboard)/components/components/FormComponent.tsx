@@ -1,18 +1,11 @@
-import {
-    Alert,
-    AlertDescription,
-    AlertTitle,
-    Button,
-    Input,
-    Label,
-} from '@/components/ui';
+import { Alert, AlertDescription, AlertTitle, Button, Input, Label } from '@/components/ui';
+import { Components_API_URL } from '@/conts/conts';
 import { useFetchSystems } from '@/hooks/Fetch';
 import type { Component } from '@/type/System';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Terminal } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
-import {Components_API_URL} from "@/conts/conts";
 
 interface FormComponentProps {
     component?: Component;
@@ -112,7 +105,7 @@ export const FormComponent = ({ component, onSuccess }: FormComponentProps) => {
                         disabled={isLoadingSystems || isErrorSystems}
                         required
                         className="w-full p-2 text-sm border rounded-md dark:bg-gray-900 dark:text-gray-300"
-                        >
+                    >
                         <option value="" disabled>
                             Select a system
                         </option>

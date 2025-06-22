@@ -5,10 +5,10 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
 
 export const UptimeEventProvider = () => {
-	const [queryClient] = useState(() => new QueryClient());
-	return (
-		<QueryClientProvider client={queryClient}>
-			<UptimeEvents />
-		</QueryClientProvider>
-	)
-}
+    const [queryClient] = useState(() => new QueryClient());
+    return (
+        <QueryClientProvider client={queryClient}>
+            <UptimeEvents />
+        </QueryClientProvider>
+    );
+};
