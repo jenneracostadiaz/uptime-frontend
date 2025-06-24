@@ -225,7 +225,7 @@ export const FormCheck = ({ check, onSuccess }: FormCheckProps) => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="grid gap-3">
-                        <Label htmlFor="checkInterval">Check Interval (seconds)</Label>
+                        <Label htmlFor="checkInterval">Check Interval (minutes)</Label>
                         <Input
                             id="checkInterval"
                             type="number"
@@ -242,7 +242,7 @@ export const FormCheck = ({ check, onSuccess }: FormCheckProps) => {
                     </div>
 
                     <div className="grid gap-3">
-                        <Label htmlFor="checkTimeout">Check Timeout (seconds)</Label>
+                        <Label htmlFor="checkTimeout">Check Timeout (minutes)</Label>
                         <Input
                             id="checkTimeout"
                             type="number"
